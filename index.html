@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Fiscal 2025 - Ahora Seguros</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1f2937;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: clamp(10px, 3vw, 20px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: clamp(20px, 5vw, 40px);
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .header h1 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+            opacity: 0.9;
+        }
+
+        .logo {
+            width: clamp(60px, 15vw, 100px);
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .main-content {
+            padding: clamp(20px, 5vw, 40px);
+        }
+
+        .input-section {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .input-section h2 {
+            font-size: clamp(1.25rem, 3.5vw, 1.875rem);
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #1f2937;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .currency-symbol {
+            font-size: clamp(1.125rem, 3vw, 1.5rem);
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .salary-input {
+            font-size: clamp(1.125rem, 3vw, 1.5rem);
+            padding: clamp(12px, 3vw, 16px);
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            width: clamp(200px, 50vw, 300px);
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .salary-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .currency-label {
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            padding: clamp(12px, 3vw, 16px) clamp(24px, 6vw, 32px);
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px -3px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            border: none;
+            padding: clamp(10px, 2.5vw, 14px) clamp(20px, 5vw, 28px);
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 12px 0;
+            box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.3);
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px -2px rgba(22, 163, 74, 0.4);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: clamp(12px, 3vw, 20px);
+            margin: 24px 0;
+        }
+
+        .result-card {
+            background: white;
+            padding: clamp(16px, 4vw, 24px);
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-card h3 {
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .result-card .amount {
+            font-size: clamp(1.25rem, 4vw, 1.875rem);
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .result-card .rate {
+            font-size: clamp(0.75rem, 2vw, 0.875rem);
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .result-card.sat-warning {
+            background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+            border: 2px solid #ef4444;
+            color: #dc2626;
+        }
+
+        .result-card.sat-warning h3 {
+            color: #dc2626;
+            font-weight: 700;
+        }
+
+        .result-card.sat-warning .amount {
+            color: #dc2626;
+            font-weight: 800;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .deducciones-section {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-radius: 12px;
+            padding: clamp(16px, 4vw, 32px);
+            margin: 24px 0;
+            border: 1px solid #16a34a;
+        }
+
+        .deducciones-section h3 {
+            color: #15803d;
+            font-size: clamp(1.125rem, 3.5vw, 1.375rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .estimulos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(16px, 4vw, 24px);
+            margin-bottom: 24px;
+        }
+
+        .estimulo-item {
+            background: white;
+            padding: clamp(16px, 4vw, 20px);
+            border-radius: 10px;
+            border: 1px solid #16a34a;
+            box-shadow: 0 2px 4px rgba(22, 163, 74, 0.1);
+        }
+
+        .estimulo-item h4 {
+            color: #15803d;
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .estimulo-item p {
+            color: #374151;
+            font-size: clamp(0.875rem, 2vw, 0.9375rem);
+            line-height: 1.5;
+        }
+
+        .estimulo-completo {
+            margin-bottom: 24px;
+        }
+
+        .estimulo-completo .deduccion-input {
+            margin-top: 16px;
+        }
+
+        /* Mostrar/ocultar layouts según dispositivo */
+        .desktop-layout {
+            display: block;
+        }
+
+        .mobile-layout {
+            display: none;
+        }
+
+        .deduccion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(16px, 4vw, 24px);
+            margin-bottom: 20px;
+        }
+
+        .deduccion-input {
+            text-align: center;
+        }
+
+        .deduccion-input label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 4px;
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+        }
+
+        .deduccion-input .limite {
+            font-size: clamp(0.75rem, 2vw, 0.875rem);
+            color: #059669;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .deduccion-input input {
+            width: 100%;
+            padding: clamp(10px, 2.5vw, 12px);
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .deduccion-input input:focus {
+            outline: none;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+        }
+
+        .center-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .comparison-section {
+            margin: 32px 0;
+        }
+
+        .comparison-section h3 {
+            font-size: clamp(1.125rem, 3.5vw, 1.375rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #1f2937;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: clamp(12px, 3vw, 20px);
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: white;
+            padding: clamp(16px, 4vw, 20px);
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-card h4 {
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .comparison-card .amount {
+            font-size: clamp(1.125rem, 3.5vw, 1.5rem);
+            font-weight: 700;
+            color: #1f2937;
+            margin: 6px 0;
+            word-break: break-word;
+        }
+
+        .comparison-card .rate {
+            font-size: clamp(0.75rem, 2vw, 0.875rem);
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .savings-card {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 1px solid #16a34a;
+            color: #15803d;
+        }
+
+        .time-card {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border: 1px solid #2563eb;
+            color: #1d4ed8;
+        }
+
+        .financial-analysis {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 12px;
+            padding: clamp(16px, 4vw, 32px);
+            margin: 24px 0;
+            border: 1px solid #3b82f6;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .financial-analysis::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8, #1e40af);
+        }
+
+        .financial-analysis h4 {
+            color: #1e40af;
+            font-size: clamp(1.125rem, 3.5vw, 1.5rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .financial-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: clamp(12px, 3vw, 20px);
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: white;
+            padding: clamp(12px, 3vw, 20px);
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #3b82f6;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .metric-value {
+            font-size: clamp(1.125rem, 3.5vw, 1.5rem);
+            font-weight: 700;
+            color: #1e40af;
+            margin: 6px 0;
+            word-break: break-word;
+        }
+
+        .metric-label {
+            color: #2563eb;
+            font-size: clamp(0.75rem, 2vw, 0.875rem);
+            font-weight: 600;
+        }
+
+        .roi-highlight {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #16a34a;
+            padding: clamp(16px, 4vw, 24px);
+            border-radius: 10px;
+            text-align: center;
+            margin: 16px 0;
+        }
+
+        .roi-highlight .roi-title {
+            font-size: clamp(1rem, 3vw, 1.125rem);
+            font-weight: 600;
+            color: #15803d;
+            margin-bottom: 6px;
+        }
+
+        .roi-highlight .roi-value {
+            font-size: clamp(1.875rem, 6vw, 2.5rem);
+            font-weight: 800;
+            color: #15803d;
+            margin: 6px 0;
+        }
+
+        .roi-highlight .roi-description {
+            font-size: clamp(0.75rem, 2.5vw, 0.875rem);
+            color: #15803d;
+        }
+
+        .footer {
+            background: #f8fafc;
+            padding: clamp(20px, 5vw, 32px);
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer p {
+            color: #6b7280;
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+            margin: 0;
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            text-decoration: none;
+            padding: clamp(12px, 3vw, 16px) clamp(24px, 6vw, 32px);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px -3px rgba(22, 163, 74, 0.4);
+        }
+
+        .nota-calculo {
+            color: #2563eb;
+            font-style: italic;
+            font-size: clamp(0.75rem, 2vw, 0.875rem);
+            text-align: center;
+            margin-top: 16px;
+            word-break: break-word;
+        }
+
+        /* Mejoras específicas para móviles */
+        @media (max-width: 640px) {
+            body {
+                padding: 8px;
+            }
+            
+            .container {
+                border-radius: 12px;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+                justify-content: center;
+                gap: 20px;
+                padding: 16px;
+            }
+            
+            .header div {
+                order: 2;
+            }
+            
+            .logo {
+                order: 1;
+                width: clamp(80px, 20vw, 120px);
+            }
+            
+            .main-content {
+                padding: 16px;
+            }
+            
+            .results-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 12px;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 12px;
+            }
+            
+            .financial-metrics {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 12px;
+            }
+
+            /* Cambiar layouts en móviles */
+            .desktop-layout {
+                display: none;
+            }
+
+            .mobile-layout {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div>
+                <h1>Calculadora Fiscal 2025</h1>
+                <p>Rodrigo De la Mora Elizondo</p>
+            </div>
+            <img src="logo.png" alt="Ahora Seguros" class="logo">
+        </header>
+
+        <main class="main-content">
+            <section class="input-section">
+                <h2>Ingresa tu Salario Mensual</h2>
+                <div class="input-group">
+                    <span class="currency-symbol">$</span>
+                    <input type="number" id="salario-mensual" class="salary-input" placeholder="50,000" min="1" step="1000">
+                    <span class="currency-label">MXN mensuales</span>
+                </div>
+                <button id="calcular-btn" class="btn-primary">Calcular Impuestos</button>
+            </section>
+
+            <section id="results-section" class="hidden">
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h3>Ingreso Anual</h3>
+                        <div class="amount" id="ingreso-anual">$0</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>ISR Anual</h3>
+                        <div class="amount" id="isr-anual">$0</div>
+                        <div class="rate" id="tasa-anual">Tasa: 0%</div>
+                    </div>
+                    <div class="result-card">
+                        <h3>ISR Mensual</h3>
+                        <div class="amount" id="isr-mensual">$0</div>
+                    </div>
+                    <div class="result-card sat-warning">
+                        <h3>⚠️ Meses para el SAT</h3>
+                        <div class="amount" id="meses-sat">0</div>
+                    </div>
+                </div>
+
+                <!-- Leyenda impactante ANTES de Estímulos Fiscales -->
+                <div id="sat-warning-message" class="hidden" style="background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); border: 2px solid #ef4444; border-radius: 12px; padding: clamp(16px, 4vw, 24px); margin: 16px 0; text-align: center;">
+                    <p style="color: #dc2626; font-weight: 600; font-size: clamp(1rem, 3vw, 1.125rem); margin: 0;">
+                        ⚠️ De los 12 meses que trabajas en el año, el SAT se queda con <span id="meses-sat-text" style="font-weight: 800; font-size: clamp(1.125rem, 3.5vw, 1.25rem);">0 meses</span> del fruto de tu esfuerzo.
+                    </p>
+                </div>
+
+                <div class="deducciones-section">
+                    <h3>🎯 Estímulos Fiscales Disponibles</h3>
+                    
+                    <!-- Layout Desktop: Recuadros informativos primero -->
+                    <div class="estimulos-grid desktop-layout">
+                        <div class="estimulo-item">
+                            <h4>🏠 Gastos Personales</h4>
+                            <p><strong>Límite:</strong> 15% del ingreso anual (máximo 5 UMAs = $206,368)<br>
+                            <strong>Incluye:</strong> Gastos médicos, dentales, funerarios, donativos, intereses hipotecarios, colegiaturas<br>
+                            <small style="color: #059669; font-weight: 500;"><em>Art. 151 Fracción VI LISR</em></small></p>
+                        </div>
+                        <div class="estimulo-item">
+                            <h4>💰 Plan Personal de Retiro (PPR)</h4>
+                            <p><strong>Límite:</strong> 10% del ingreso anual (máximo 5 UMAs = $206,368)<br>
+                            <strong>Beneficio:</strong> Deducible 100%, retiro después de 5 años<br>
+                            <small style="color: #059669; font-weight: 500;"><em>Art. 151 Fracción V LISR</em></small></p>
+                        </div>
+                        <div class="estimulo-item">
+                            <h4>🏦 Cuenta Especial para el Ahorro</h4>
+                            <p><strong>Límite:</strong> $152,000 anuales<br>
+                            <strong>Beneficio:</strong> Complementa al PPR, mínimo 5 años de permanencia<br>
+                            <small style="color: #059669; font-weight: 500;"><em>Art. 185 LISR</em></small></p>
+                        </div>
+                    </div>
+
+                    <!-- Layout Desktop: Campos de entrada después -->
+                    <div class="deduccion-grid desktop-layout">
+                        <div class="deduccion-input">
+                            <label for="gastos-personales">Gastos Personales</label>
+                            <div class="limite">(Límite: $45,000)</div>
+                            <input type="number" id="gastos-personales" placeholder="0" min="0" max="45000">
+                        </div>
+                        <div class="deduccion-input">
+                            <label for="ppr">Plan Personal de Retiro (PPR)</label>
+                            <div class="limite">(Límite: $30,000)</div>
+                            <input type="number" id="ppr" placeholder="0" min="0" max="30000">
+                        </div>
+                        <div class="deduccion-input">
+                            <label for="cuenta-especial">Cuenta Especial para el Ahorro</label>
+                            <div class="limite">(Límite: $152,000)</div>
+                            <input type="number" id="cuenta-especial" placeholder="0" min="0" max="152000">
+                        </div>
+                    </div>
+
+                    <!-- Layout Móvil: Cada explicación con su campo -->
+                    <div class="mobile-layout">
+                        <!-- Gastos Personales -->
+                        <div class="estimulo-completo">
+                            <div class="estimulo-item">
+                                <h4>🏠 Gastos Personales</h4>
+                                <p><strong>Límite:</strong> 15% del ingreso anual (máximo 5 UMAs = $206,368)<br>
+                                <strong>Incluye:</strong> Gastos médicos, dentales, funerarios, donativos, intereses hipotecarios, colegiaturas<br>
+                                <small style="color: #059669; font-weight: 500;"><em>Art. 151 Fracción VI LISR</em></small></p>
+                            </div>
+                            <div class="deduccion-input">
+                                <label for="gastos-personales-mobile">Gastos Personales</label>
+                                <div class="limite">(Límite: $45,000)</div>
+                                <input type="number" id="gastos-personales-mobile" placeholder="0" min="0" max="45000">
+                            </div>
+                        </div>
+
+                        <!-- PPR -->
+                        <div class="estimulo-completo">
+                            <div class="estimulo-item">
+                                <h4>💰 Plan Personal de Retiro (PPR)</h4>
+                                <p><strong>Límite:</strong> 10% del ingreso anual (máximo 5 UMAs = $206,368)<br>
+                                <strong>Beneficio:</strong> Deducible 100%, retiro después de 5 años<br>
+                                <small style="color: #059669; font-weight: 500;"><em>Art. 151 Fracción V LISR</em></small></p>
+                            </div>
+                            <div class="deduccion-input">
+                                <label for="ppr-mobile">Plan Personal de Retiro (PPR)</label>
+                                <div class="limite">(Límite: $30,000)</div>
+                                <input type="number" id="ppr-mobile" placeholder="0" min="0" max="30000">
+                            </div>
+                        </div>
+
+                        <!-- Cuenta Especial -->
+                        <div class="estimulo-completo">
+                            <div class="estimulo-item">
+                                <h4>🏦 Cuenta Especial para el Ahorro</h4>
+                                <p><strong>Límite:</strong> $152,000 anuales<br>
+                                <strong>Beneficio:</strong> Complementa al PPR, mínimo 5 años de permanencia<br>
+                                <small style="color: #059669; font-weight: 500;"><em>Art. 185 LISR</em></small></p>
+                            </div>
+                            <div class="deduccion-input">
+                                <label for="cuenta-especial-mobile">Cuenta Especial para el Ahorro</label>
+                                <div class="limite">(Límite: $152,000)</div>
+                                <input type="number" id="cuenta-especial-mobile" placeholder="0" min="0" max="152000">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="center-btn">
+                        <button id="calcular-deducciones-btn" class="btn-secondary">Calcular con Deducciones</button>
+                    </div>
+                </div>
+
+                <div id="comparison-section" class="comparison-section hidden">
+                    <h3>📊 Comparación de Escenarios</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>Sin Deducciones</h4>
+                            <div class="amount" id="isr-sin-ded">$0</div>
+                            <div class="rate" id="tasa-sin-ded">Tasa: 0%</div>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>Con Deducciones</h4>
+                            <div class="amount" id="isr-con-ded">$0</div>
+                            <div class="rate" id="tasa-con-ded">Tasa: 0%</div>
+                        </div>
+                        <div class="comparison-card savings-card">
+                            <h4>💰 Ahorro Total</h4>
+                            <div class="amount" id="ahorro-total">$0</div>
+                            <div class="rate" id="ahorro-porcentaje">0% menos</div>
+                        </div>
+                        <div class="comparison-card time-card">
+                            <h4>⏰ Tiempo Recuperado</h4>
+                            <div class="amount" id="tiempo-recuperado">0 días</div>
+                        </div>
+                    </div>
+
+                    <div class="financial-analysis">
+                        <h4>💎 Análisis Financiero de tu Inversión</h4>
+                        <div class="financial-metrics">
+                            <div class="metric-card">
+                                <div class="metric-value" id="total-invertido">$0</div>
+                                <div class="metric-label">Total Invertido</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value" id="ahorro-fiscal">$0</div>
+                                <div class="metric-label">Ahorro Fiscal</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value" id="costo-real">$0</div>
+                                <div class="metric-label">Costo Real</div>
+                            </div>
+                        </div>
+                        
+                        <div class="roi-highlight">
+                            <div class="roi-title">✅ Rendimiento Fiscal</div>
+                            <div class="roi-value" id="rendimiento-fiscal">0%</div>
+                            <div class="roi-description">Por cada peso invertido, obtienes este retorno fiscal</div>
+                        </div>
+                        
+                        <div class="nota-calculo" id="nota-calculo">
+                            Inversión: $0 - Ahorro: $0 = Costo Real: $0
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Ahora Seguros - Rodrigo De la Mora Elizondo</p>
+            <a href="https://rebrand.ly/Ahorra-para-tu-Retiro" target="_blank" class="btn-whatsapp">
+                📱 Solicitar Consulta
+            </a>
+        </footer>
+    </div>
+
+    <script>
+        // Tablas ISR 2025 Oficiales
+        const tablaISRAnual2025 = [
+            { min: 0.01, max: 8952.49, cuotaFija: 0.00, porcentaje: 1.92 },
+            { min: 8952.50, max: 75984.55, cuotaFija: 171.88, porcentaje: 6.40 },
+            { min: 75984.56, max: 133536.07, cuotaFija: 4461.94, porcentaje: 10.88 },
+            { min: 133536.08, max: 155229.80, cuotaFija: 10723.55, porcentaje: 16.00 },
+            { min: 155229.81, max: 185852.57, cuotaFija: 14194.64, porcentaje: 17.92 },
+            { min: 185852.58, max: 374837.88, cuotaFija: 19682.13, porcentaje: 21.36 },
+            { min: 374837.89, max: 590795.99, cuotaFija: 60049.40, porcentaje: 23.52 },
+            { min: 590796.00, max: 1127926.84, cuotaFija: 110842.74, porcentaje: 30.00 },
+            { min: 1127926.85, max: 1503902.46, cuotaFija: 271981.99, porcentaje: 32.00 },
+            { min: 1503902.47, max: 4511707.37, cuotaFija: 392294.17, porcentaje: 34.00 },
+            { min: 4511707.38, max: Infinity, cuotaFija: 1414947.85, porcentaje: 35.00 }
+        ];
+
+        // Valores UMA 2025 (INEGI Oficial)
+        const UMA_2025 = {
+            diaria: 113.14,
+            mensual: 3439.46,
+            anual: 41273.52
+        };
+
+        function calcularISRAnual(ingresoAnual) {
+            for (let tramo of tablaISRAnual2025) {
+                if (ingresoAnual >= tramo.min && ingresoAnual <= tramo.max) {
+                    const excedente = ingresoAnual - tramo.min;
+                    const impuesto = tramo.cuotaFija + (excedente * tramo.porcentaje / 100);
+                    return {
+                        isr: Math.round(impuesto),
+                        tasa: tramo.porcentaje
+                    };
+                }
+            }
+            return { isr: 0, tasa: 0 };
+        }
+
+        function calcularLimites(ingresoAnual) {
+            const cincoUMAs = UMA_2025.anual * 5; // $206,367.60
+            
+            return {
+                gastosPersonales: Math.min(ingresoAnual * 0.15, cincoUMAs),
+                ppr: Math.min(ingresoAnual * 0.10, cincoUMAs),
+                cuentaEspecial: 152000 // Límite fijo
+            };
+        }
+
+        function formatearMoneda(cantidad) {
+            return new Intl.NumberFormat('es-MX', {
+                style: 'currency',
+                currency: 'MXN',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(cantidad);
+        }
+
+        let datosBase = null;
+
+        document.getElementById('calcular-btn').addEventListener('click', function() {
+            const salarioMensual = parseFloat(document.getElementById('salario-mensual').value);
+            
+            if (!salarioMensual || salarioMensual <= 0) {
+                alert('Por favor ingresa un salario válido');
+                return;
+            }
+
+            const ingresoAnual = salarioMensual * 12;
+            const resultado = calcularISRAnual(ingresoAnual);
+            const isrMensual = Math.round(resultado.isr / 12);
+            const mesesSAT = (resultado.isr / salarioMensual).toFixed(1);
+            const limites = calcularLimites(ingresoAnual);
+
+            // Actualizar límites dinámicos en la interfaz (ambos layouts)
+            document.getElementById('gastos-personales').setAttribute('max', Math.round(limites.gastosPersonales));
+            document.getElementById('ppr').setAttribute('max', Math.round(limites.ppr));
+            document.getElementById('gastos-personales-mobile').setAttribute('max', Math.round(limites.gastosPersonales));
+            document.getElementById('ppr-mobile').setAttribute('max', Math.round(limites.ppr));
+
+            // Actualizar los textos de límites en la interfaz (ambos layouts)
+            document.querySelector('label[for="gastos-personales"] + .limite').textContent = 
+                `(Límite: ${formatearMoneda(limites.gastosPersonales)})`;
+            document.querySelector('label[for="ppr"] + .limite').textContent = 
+                `(Límite: ${formatearMoneda(limites.ppr)})`;
+            document.querySelector('label[for="cuenta-especial"] + .limite').textContent = 
+                `(Límite: ${formatearMoneda(limites.cuentaEspecial)})`;
+            
+            document.querySelector('label[for="gastos-personales-mobile"] + .limite').textContent = 
+                `(Límite: ${formatearMoneda(limites.gastosPersonales)})`;
+            document.querySelector('label[for="ppr-mobile"] + .limite').textContent = 
+                `(Límite: ${formatearMoneda(limites.ppr)})`;
+            document.querySelector('label[for="cuenta-especial-mobile"] + .limite').textContent = 
+                `(Límite: ${formatearMoneda(limites.cuentaEspecial)})`;
+
+            // Mostrar resultados
+            document.getElementById('ingreso-anual').textContent = formatearMoneda(ingresoAnual);
+            document.getElementById('isr-anual').textContent = formatearMoneda(resultado.isr);
+            document.getElementById('tasa-anual').textContent = `Tasa: ${resultado.tasa}%`;
+            document.getElementById('isr-mensual').textContent = formatearMoneda(isrMensual);
+            document.getElementById('meses-sat').textContent = `${mesesSAT} meses`;
+
+            // Mostrar leyenda impactante
+            document.getElementById('meses-sat-text').textContent = `${mesesSAT} meses`;
+            document.getElementById('sat-warning-message').classList.remove('hidden');
+
+            document.getElementById('results-section').classList.remove('hidden');
+
+            // Guardar datos para comparación
+            datosBase = {
+                salarioMensual,
+                ingresoAnual,
+                isrAnual: resultado.isr,
+                tasaAnual: resultado.tasa,
+                limites
+            };
+
+            console.log('Datos base guardados:', datosBase); // Debug
+        });
+
+        document.getElementById('calcular-deducciones-btn').addEventListener('click', function() {
+            if (!datosBase) {
+                alert('Primero calcula tus impuestos básicos');
+                return;
+            }
+
+            const gastosPersonales = parseFloat(document.getElementById('gastos-personales').value) || 
+                                   parseFloat(document.getElementById('gastos-personales-mobile').value) || 0;
+            const ppr = parseFloat(document.getElementById('ppr').value) || 
+                       parseFloat(document.getElementById('ppr-mobile').value) || 0;
+            const cuentaEspecial = parseFloat(document.getElementById('cuenta-especial').value) || 
+                                 parseFloat(document.getElementById('cuenta-especial-mobile').value) || 0;
+
+            // Aplicar límites según LISR
+            const gastosLimitados = Math.min(gastosPersonales, datosBase.limites.gastosPersonales);
+            const pprLimitado = Math.min(ppr, datosBase.limites.ppr);
+            const cuentaLimitada = Math.min(cuentaEspecial, datosBase.limites.cuentaEspecial);
+
+            const totalDeducciones = gastosLimitados + pprLimitado + cuentaLimitada;
+            const ingresoGravable = Math.max(0, datosBase.ingresoAnual - totalDeducciones);
+            const resultadoConDeducciones = calcularISRAnual(ingresoGravable);
+
+            const ahorro = datosBase.isrAnual - resultadoConDeducciones.isr;
+            const porcentajeAhorro = datosBase.isrAnual > 0 ? (ahorro / datosBase.isrAnual * 100).toFixed(1) : 0;
+
+            // Calcular análisis financiero
+            const totalInvertido = pprLimitado + cuentaLimitada;
+            const costoReal = totalInvertido - ahorro;
+            const rendimientoFiscal = totalInvertido > 0 ? (ahorro / totalInvertido * 100).toFixed(1) : 0;
+
+            // Calcular tiempo recuperado
+            const diasRecuperados = Math.round((ahorro / datosBase.salarioMensual) * 30);
+            let tiempoRecuperado;
+            if (diasRecuperados >= 30) {
+                const meses = Math.floor(diasRecuperados / 30);
+                tiempoRecuperado = `${meses} mes${meses > 1 ? 'es' : ''}`;
+            } else if (diasRecuperados >= 7) {
+                const semanas = Math.floor(diasRecuperados / 7);
+                tiempoRecuperado = `${semanas} semana${semanas > 1 ? 's' : ''}`;
+            } else {
+                tiempoRecuperado = `${diasRecuperados} día${diasRecuperados > 1 ? 's' : ''}`;
+            }
+
+            // Debug - mostrar valores calculados
+            console.log('=== DEBUG CÁLCULOS ===');
+            console.log('Ingreso anual:', datosBase.ingresoAnual);
+            console.log('Total deducciones:', totalDeducciones);
+            console.log('Ingreso gravable:', ingresoGravable);
+            console.log('ISR sin deducciones:', datosBase.isrAnual);
+            console.log('ISR con deducciones:', resultadoConDeducciones.isr);
+            console.log('Ahorro:', ahorro);
+
+            // Mostrar comparación - VALORES CORREGIDOS
+            document.getElementById('isr-sin-ded').textContent = formatearMoneda(datosBase.isrAnual);
+            document.getElementById('tasa-sin-ded').textContent = `Tasa: ${datosBase.tasaAnual}%`;
+            document.getElementById('isr-con-ded').textContent = formatearMoneda(resultadoConDeducciones.isr);
+            document.getElementById('tasa-con-ded').textContent = `Tasa: ${resultadoConDeducciones.tasa}%`;
+            document.getElementById('ahorro-total').textContent = formatearMoneda(ahorro);
+            document.getElementById('ahorro-porcentaje').textContent = `${porcentajeAhorro}% menos`;
+            document.getElementById('tiempo-recuperado').textContent = tiempoRecuperado;
+
+            // Mostrar análisis financiero
+            document.getElementById('total-invertido').textContent = formatearMoneda(totalInvertido);
+            document.getElementById('ahorro-fiscal').textContent = formatearMoneda(ahorro);
+            document.getElementById('costo-real').textContent = formatearMoneda(costoReal);
+            document.getElementById('rendimiento-fiscal').textContent = `${rendimientoFiscal}%`;
+            document.getElementById('nota-calculo').textContent = 
+                `Inversión: ${formatearMoneda(totalInvertido)} - Ahorro: ${formatearMoneda(ahorro)} = Costo Real: ${formatearMoneda(costoReal)}`;
+
+            document.getElementById('comparison-section').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
+

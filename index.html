@@ -296,65 +296,6 @@
             box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
         }
 
-        .estimulo-completo {
-            margin-bottom: 24px;
-        }
-
-        .estimulo-completo .deduccion-input {
-            margin-top: 16px;
-        }
-
-        /* Mostrar/ocultar layouts según dispositivo */
-        .desktop-layout {
-            display: block;
-        }
-
-        .mobile-layout {
-            display: none;
-        }
-
-        .deduccion-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: clamp(16px, 4vw, 24px);
-            margin-bottom: 20px;
-        }
-
-        .deduccion-input {
-            text-align: center;
-        }
-
-        .deduccion-input label {
-            display: block;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 4px;
-            font-size: clamp(0.875rem, 2.5vw, 1rem);
-        }
-
-        .deduccion-input .limite {
-            font-size: clamp(0.75rem, 2vw, 0.875rem);
-            color: #059669;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .deduccion-input input {
-            width: 100%;
-            padding: clamp(10px, 2.5vw, 12px);
-            border: 2px solid #d1d5db;
-            border-radius: 6px;
-            font-size: clamp(0.875rem, 2.5vw, 1rem);
-            text-align: center;
-            transition: all 0.2s ease;
-        }
-
-        .deduccion-input input:focus {
-            outline: none;
-            border-color: #16a34a;
-            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
-        }
-
         .center-btn {
             display: flex;
             justify-content: center;
@@ -397,14 +338,16 @@
         }
 
         .comparison-card .amount {
-            font-size: clamp(1.125rem, 3.5vw, 1.5rem);
+            font-size: clamp(0.75rem, 2.8vw, 1.5rem);
             font-weight: 700;
             color: #1f2937;
             margin: 6px 0;
-            word-break: break-word;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            word-break: break-all;
+            line-height: 1.2;
+            min-height: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .comparison-card .rate {
@@ -599,29 +542,37 @@
             }
             
             .comparison-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
                 gap: 12px;
             }
 
             .comparison-card .amount {
-                font-size: clamp(0.875rem, 3vw, 1.125rem);
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                font-size: clamp(0.7rem, 2.5vw, 1rem);
+                word-break: break-all;
+                line-height: 1.1;
+                padding: 2px;
             }
             
             .financial-metrics {
                 grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
                 gap: 12px;
             }
+        }
 
-            /* Cambiar layouts en móviles */
-            .desktop-layout {
-                display: none;
+        /* Mejoras para pantallas muy pequeñas */
+        @media (max-width: 480px) {
+            .comparison-grid {
+                grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+                gap: 8px;
             }
 
-            .mobile-layout {
-                display: block;
+            .comparison-card {
+                padding: clamp(12px, 3vw, 16px);
+            }
+
+            .comparison-card .amount {
+                font-size: clamp(0.65rem, 2.2vw, 0.9rem);
+                line-height: 1.0;
             }
         }
     </style>
@@ -682,7 +633,7 @@
                     <div class="estimulos-grid">
                         <div class="estimulo-item">
                             <h4>🏠 Gastos Personales</h4>
-                            <p><strong>Límite:</strong> 15% del ingreso anual (máximo 5 UMAs = $206,368)<br>
+                            <p><strong>Límite:</strong> 15% del ingreso anual (5 UMAs Anuales = $206,368)<br>
                             <strong>Incluye:</strong> Gastos médicos, dentales, funerarios, donativos, intereses hipotecarios, colegiaturas<br>
                             <small style="color: #059669; font-weight: 500;"><em>Art. 151 Fracción VI LISR</em></small></p>
                             
@@ -695,7 +646,7 @@
                         
                         <div class="estimulo-item">
                             <h4>💰 Plan Personal de Retiro (PPR)</h4>
-                            <p><strong>Límite:</strong> 10% del ingreso anual (máximo 5 UMAs = $206,368)<br>
+                            <p><strong>Límite:</strong> 10% del ingreso anual (5 UMAs Anuales = $206,368)<br>
                             <strong>Beneficio:</strong> Deducible 100%, retiro después de 5 años<br>
                             <small style="color: #059669; font-weight: 500;"><em>Art. 151 Fracción V LISR</em></small></p>
                             

@@ -598,7 +598,7 @@
                 <h2>Ingresa tu Salario Mensual</h2>
                 <div class="input-group">
                     <span class="currency-symbol">$</span>
-                    <input type="number" id="salario-mensual" class="salary-input" placeholder="50,000" min="1" step="1000">
+                    <input type="number" id="salario-mensual" class="salary-input" placeholder="50,000" min="1" step="1000" inputmode="numeric" pattern="[0-9]*">
                     <span class="currency-label">MXN mensuales</span>
                 </div>
                 <button id="calcular-btn" class="btn-primary">Calcular Impuestos</button>
@@ -646,7 +646,7 @@
                             <div class="deduccion-input-integrado">
                                 <label for="gastos-personales">Monto Anual</label>
                                 <div class="limite">(Límite: $45,000)</div>
-                                <input type="number" id="gastos-personales" placeholder="0" min="0" max="45000">
+                                <input type="number" id="gastos-personales" placeholder="0" min="0" max="45000" inputmode="numeric" pattern="[0-9]*">
                             </div>
                         </div>
                         
@@ -659,7 +659,7 @@
                             <div class="deduccion-input-integrado">
                                 <label for="ppr">Monto Anual</label>
                                 <div class="limite">(Límite: $30,000)</div>
-                                <input type="number" id="ppr" placeholder="0" min="0" max="30000">
+                                <input type="number" id="ppr" placeholder="0" min="0" max="30000" inputmode="numeric" pattern="[0-9]*">
                             </div>
                         </div>
                         
@@ -672,7 +672,7 @@
                             <div class="deduccion-input-integrado">
                                 <label for="cuenta-especial">Monto Anual</label>
                                 <div class="limite">(Límite: $152,000)</div>
-                                <input type="number" id="cuenta-especial" placeholder="0" min="0" max="152000">
+                                <input type="number" id="cuenta-especial" placeholder="0" min="0" max="152000" inputmode="numeric" pattern="[0-9]*">
                             </div>
                         </div>
                     </div>

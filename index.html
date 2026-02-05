@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Fiscal 2025 - Ahora Seguros</title>
+    <title>Calculadora Fiscal 2026 - Ahora Seguros</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
@@ -587,7 +587,7 @@
     <div class="container">
         <header class="header">
             <div>
-                <h1>Calculadora Fiscal 2025</h1>
+                <h1>Calculadora Fiscal 2026</h1>
                 <p>Rodrigo De la Mora Elizondo</p>
             </div>
             <img src="logo.png" alt="Ahora Seguros" class="logo">
@@ -639,7 +639,7 @@
                     <div class="estimulos-grid">
                         <div class="estimulo-item">
                             <h4>🏠 Gastos Personales</h4>
-                            <p><strong>Límite:</strong> 15% del ingreso anual (5 UMAs Anuales = $206,368)<br>
+                            <p><strong>Límite:</strong> 15% del ingreso anual (5 UMAs Anuales = $213,973)<br>
                             <strong>Incluye:</strong> Gastos médicos, dentales, funerarios, donativos, intereses hipotecarios, colegiaturas<br>
                             <small style="color: #059669; font-weight: 500;"><em>Art. 151 Fracción VI LISR</em></small></p>
                             
@@ -652,7 +652,7 @@
                         
                         <div class="estimulo-item">
                             <h4>💰 Plan Personal de Retiro (PPR)</h4>
-                            <p><strong>Límite:</strong> 10% del ingreso anual (5 UMAs Anuales = $206,368)<br>
+                            <p><strong>Límite:</strong> 10% del ingreso anual (5 UMAs Anuales = $213,973)<br>
                             <strong>Beneficio:</strong> Deducible 100%, retiro después de 5 años<br>
                             <small style="color: #059669; font-weight: 500;"><em>Art. 151 Fracción V LISR</em></small></p>
                             
@@ -760,11 +760,11 @@
             { min: 4511707.38, max: Infinity, cuotaFija: 1414947.85, porcentaje: 35.00 }
         ];
 
-        // Valores UMA 2025 (INEGI Oficial)
-        const UMA_2025 = {
-            diaria: 113.14,
-            mensual: 3439.46,
-            anual: 41273.52
+        // Valores UMA 2026 (INEGI Oficial)
+        const UMA_2026 = {
+            diaria: 117.31,
+            mensual: 3566.22,
+            anual: 42794.64
         };
 
         function calcularISRAnual(ingresoAnual) {
@@ -782,7 +782,7 @@
         }
 
         function calcularLimites(ingresoAnual) {
-            const cincoUMAs = UMA_2025.anual * 5; // $206,367.60
+            const cincoUMAs = UMA_2026.anual * 5; // $213,973.20
             
             return {
                 gastosPersonales: Math.min(ingresoAnual * 0.15, cincoUMAs),

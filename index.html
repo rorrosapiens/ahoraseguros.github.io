@@ -745,19 +745,35 @@
     </div>
 
     <script>
-        // Tablas ISR 2025 Oficiales
-        const tablaISRAnual2025 = [
-            { min: 0.01, max: 8952.49, cuotaFija: 0.00, porcentaje: 1.92 },
-            { min: 8952.50, max: 75984.55, cuotaFija: 171.88, porcentaje: 6.40 },
-            { min: 75984.56, max: 133536.07, cuotaFija: 4461.94, porcentaje: 10.88 },
-            { min: 133536.08, max: 155229.80, cuotaFija: 10723.55, porcentaje: 16.00 },
-            { min: 155229.81, max: 185852.57, cuotaFija: 14194.64, porcentaje: 17.92 },
-            { min: 185852.58, max: 374837.88, cuotaFija: 19682.13, porcentaje: 21.36 },
-            { min: 374837.89, max: 590795.99, cuotaFija: 60049.40, porcentaje: 23.52 },
-            { min: 590796.00, max: 1127926.84, cuotaFija: 110842.74, porcentaje: 30.00 },
-            { min: 1127926.85, max: 1503902.46, cuotaFija: 271981.99, porcentaje: 32.00 },
-            { min: 1503902.47, max: 4511707.37, cuotaFija: 392294.17, porcentaje: 34.00 },
-            { min: 4511707.38, max: Infinity, cuotaFija: 1414947.85, porcentaje: 35.00 }
+        // Tablas ISR 2026 Oficiales (SAT - El Contribuyente)
+        // Tarifa anual para declaración anual
+        const tablaISRAnual2026 = [
+            { min: 0.01,         max: 10135.11,    cuotaFija: 0.00,        porcentaje: 1.92  },
+            { min: 10135.12,     max: 86022.11,    cuotaFija: 194.59,      porcentaje: 6.40  },
+            { min: 86022.12,     max: 151176.19,   cuotaFija: 5051.37,     porcentaje: 10.88 },
+            { min: 151176.20,    max: 175735.66,   cuotaFija: 12140.13,    porcentaje: 16.00 },
+            { min: 175735.67,    max: 210403.69,   cuotaFija: 16069.64,    porcentaje: 17.92 },
+            { min: 210403.70,    max: 424353.97,   cuotaFija: 22282.14,    porcentaje: 21.36 },
+            { min: 424353.98,    max: 668840.14,   cuotaFija: 67981.92,    porcentaje: 23.52 },
+            { min: 668840.15,    max: 1276925.98,  cuotaFija: 125485.07,   porcentaje: 30.00 },
+            { min: 1276925.99,   max: 1702567.97,  cuotaFija: 307910.81,   porcentaje: 32.00 },
+            { min: 1702567.98,   max: 5107703.92,  cuotaFija: 444116.23,   porcentaje: 34.00 },
+            { min: 5107703.93,   max: Infinity,    cuotaFija: 1601862.46,  porcentaje: 35.00 }
+        ];
+
+        // Tarifa mensual para retenciones 2026
+        const tablaISRMensual2026 = [
+            { min: 0.01,       max: 844.59,     cuotaFija: 0.00,       porcentaje: 1.92  },
+            { min: 844.60,     max: 7168.51,    cuotaFija: 16.22,      porcentaje: 6.40  },
+            { min: 7168.52,    max: 12598.02,   cuotaFija: 420.95,     porcentaje: 10.88 },
+            { min: 12598.03,   max: 14644.64,   cuotaFija: 1011.68,    porcentaje: 16.00 },
+            { min: 14644.65,   max: 17533.64,   cuotaFija: 1339.14,    porcentaje: 17.92 },
+            { min: 17533.65,   max: 35362.83,   cuotaFija: 1856.84,    porcentaje: 21.36 },
+            { min: 35362.84,   max: 55736.68,   cuotaFija: 5665.16,    porcentaje: 23.52 },
+            { min: 55736.69,   max: 106410.50,  cuotaFija: 10457.09,   porcentaje: 30.00 },
+            { min: 106410.51,  max: 141880.66,  cuotaFija: 25659.23,   porcentaje: 32.00 },
+            { min: 141880.67,  max: 425641.99,  cuotaFija: 37009.69,   porcentaje: 34.00 },
+            { min: 425642.00,  max: Infinity,   cuotaFija: 133488.54,  porcentaje: 35.00 }
         ];
 
         // Valores UMA 2026 (INEGI Oficial)
@@ -768,9 +784,23 @@
         };
 
         function calcularISRAnual(ingresoAnual) {
-            for (let tramo of tablaISRAnual2025) {
+            for (let tramo of tablaISRAnual2026) {
                 if (ingresoAnual >= tramo.min && ingresoAnual <= tramo.max) {
                     const excedente = ingresoAnual - tramo.min;
+                    const impuesto = tramo.cuotaFija + (excedente * tramo.porcentaje / 100);
+                    return {
+                        isr: Math.round(impuesto),
+                        tasa: tramo.porcentaje
+                    };
+                }
+            }
+            return { isr: 0, tasa: 0 };
+        }
+
+        function calcularISRMensual(salarioMensual) {
+            for (let tramo of tablaISRMensual2026) {
+                if (salarioMensual >= tramo.min && salarioMensual <= tramo.max) {
+                    const excedente = salarioMensual - tramo.min;
                     const impuesto = tramo.cuotaFija + (excedente * tramo.porcentaje / 100);
                     return {
                         isr: Math.round(impuesto),
@@ -812,7 +842,8 @@
 
             const ingresoAnual = salarioMensual * 12;
             const resultado = calcularISRAnual(ingresoAnual);
-            const isrMensual = Math.round(resultado.isr / 12);
+            const resultadoMensual = calcularISRMensual(salarioMensual);
+            const isrMensual = resultadoMensual.isr;
             const mesesSAT = (resultado.isr / salarioMensual).toFixed(1);
             const limites = calcularLimites(ingresoAnual);
 

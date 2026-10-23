@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Fiscal 2026 - Ahora Seguros</title>
 
-    <!-- Favicon -->
+    <!-- Favicon e ícono de app -->
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="shortcut icon" type="image/png" href="logo.png">
-    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Ahora Fiscal">
+    <meta name="theme-color" content="#1A1AAF">
 
     <!-- Tipografía Boreal -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,7 +85,7 @@
         /* ===== Hero ===== */
         .hero { background: #FFFFFF; border-bottom: 1px solid #E5E7EB; }
         .hero-inner {
-            max-width: 1120px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: clamp(22px, 4vw, 34px) clamp(18px, 4vw, 32px);
             display: flex;
@@ -105,14 +111,36 @@
         }
         .hero .sub {
             margin-top: 8px;
-            font-size: clamp(0.9rem, 2.4vw, 1.05rem);
-            font-weight: 500;
-            color: #596173;
+            font-size: clamp(0.95rem, 2.4vw, 1.08rem);
+            font-weight: 600;
+            color: #1A1AAF;
+        }
+        .whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 8px;
+            color: #1d4ed8;
+            font-weight: 600;
+            font-size: 0.98rem;
+            text-decoration: none;
+        }
+        .whatsapp svg { width: 16px; height: 16px; fill: currentColor; flex: none; }
+        .whatsapp:hover { text-decoration: underline; }
+
+        .pasos-intro {
+            font-family: 'Montserrat', 'MontserratLocal', 'Manrope', sans-serif;
+            font-weight: 600;
+            font-size: clamp(1.05rem, 2.5vw, 1.28rem);
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+            color: #0F1124;
+            margin: 2px 2px -2px;
         }
 
         /* ===== Layout ===== */
         .wrap {
-            max-width: 1120px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: clamp(16px, 4vw, 32px) clamp(14px, 4vw, 32px) 40px;
             display: flex;
@@ -256,74 +284,82 @@
         .estimulos-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 16px;
+            gap: 18px;
+            align-items: stretch;
         }
         .estimulo-item {
             background: #FFFFFF;
-            border: 1px solid #16a34a;
+            border: 1.5px solid var(--borde);
             border-radius: 14px;
             box-shadow: var(--sombra);
-            padding: 20px;
-            display: flex; flex-direction: column;
+            padding: 16px 18px 16px;
+            display: flex;
+            flex-direction: column;
             min-width: 0;
-            transition: border-color .2s;
         }
-        .estimulo-item:focus-within { border-color: #15803d; }
-        .estimulo-item.destacado { border-color: #86efac; border-width: 1px; box-shadow: 0 0 0 1px #16a34a; }
-        .estimulo-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+        .mark {
+            width: 34px; height: 34px;
+            border-radius: 10px;
+            display: inline-grid;
+            place-items: center;
+            flex: none;
+        }
+        .mark .ico { width: 18px; height: 18px; color: currentColor; }
+        .estimulo-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
         .estimulo-item h4 {
-            font-size: 1.02rem;
-            display: flex; align-items: center; gap: 8px;
-            margin-bottom: 8px;
-            color: #15803d;
+            font-size: 1.05rem;
+            line-height: 1.25;
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 12px;
+            color: var(--tinta);
         }
-        .estimulo-item h4 .ico { color: #15803d; width: 20px; height: 20px; }
+        .estimulo-top h4 { margin-bottom: 0; flex: 1; min-width: 0; }
         .tag {
-            display: inline-block;
+            display: inline-flex;
+            align-self: flex-start;
+            max-width: 100%;
+            white-space: nowrap;
             font-size: 10px; font-weight: 800;
-            letter-spacing: 0.08em; text-transform: uppercase;
-            color: #15803d;
-            background: #f0fdf4;
-            border: 1px solid #86efac;
+            letter-spacing: 0.03em; text-transform: uppercase;
             border-radius: 999px;
-            padding: 3px 10px;
-            margin-bottom: 10px;
-            line-height: 1.4;
+            padding: 4px 10px;
+            margin-bottom: 12px;
+            line-height: 1.2;
         }
         .cochinito {
             background: #FFFFFF;
-            height: 100px; width: auto;
+            height: 76px; width: auto;
             flex: none;
             mix-blend-mode: multiply;
             border: 0; box-shadow: none;
+            object-fit: contain;
         }
-        .estimulo-item p { color: var(--tinta-2); font-size: 0.88rem; line-height: 1.5; }
+        .estimulo-copy { display: flex; flex-direction: column; gap: 10px; }
+        .estimulo-item p { color: var(--tinta-2); font-size: 0.9rem; line-height: 1.55; margin: 0; }
         .estimulo-item p strong { color: var(--tinta); font-weight: 700; }
-        .estimulo-item .art { display: block; margin-top: 6px; color: #059669; font-weight: 600; font-size: 0.8rem; }
+        .estimulo-item .art { display: block; margin: 0; font-weight: 700; font-size: 0.82rem; line-height: 1.4; }
 
-        .deduccion-input-integrado {
+        .deduccion-bloque {
             margin-top: auto;
-            padding-top: 16px;
-            border-top: 1px solid var(--borde);
+            padding-top: 14px;
+            border-top: 1px solid #e7eaf0;
+            display: flex;
+            flex-direction: column;
         }
-        .ded-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; margin-top: 16px; }
-        .deduccion-input-integrado label { font-weight: 700; font-size: 0.9rem; color: var(--tinta); }
-        .deduccion-input-integrado .limite { font-size: 0.8rem; color: #059669; font-weight: 600; margin-bottom: 8px; }
+        .ded-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: nowrap; margin: 0 0 6px; }
+        .ded-head label { font-weight: 700; font-size: 0.9rem; color: var(--tinta); }
+        .limite { font-size: 0.82rem; font-weight: 700; margin-bottom: 8px; }
         .pill {
             display: inline-flex; align-items: center; gap: 5px;
-            background: #f0fdf4;
-            color: #15803d;
-            border: 1px solid #86efac;
             border-radius: 999px;
-            padding: 4px 12px;
+            padding: 5px 12px;
             font: 700 0.76rem 'Manrope', 'ManropeLocal', sans-serif;
             cursor: pointer;
-            transition: background .2s, border-color .2s;
             white-space: nowrap;
+            background: transparent;
         }
-        .pill:hover { background: #dcfce7; border-color: #16a34a; }
         .pill .ico { width: 13px; height: 13px; }
-        .deduccion-input-integrado input {
+        .deduccion-bloque input {
             width: 100%;
             padding: 11px 14px;
             border: 1.5px solid var(--borde);
@@ -331,13 +367,38 @@
             font: 700 1rem 'Manrope', 'ManropeLocal', sans-serif;
             font-variant-numeric: tabular-nums;
             color: var(--tinta);
+            background: #fff;
             transition: border-color .2s, box-shadow .2s;
         }
-        .deduccion-input-integrado input:focus {
-            outline: none;
-            border-color: #16a34a;
-            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
-        }
+        .deduccion-bloque input:focus { outline: none; }
+
+        .tono-ambar { border-color: #f59e0b; border-top-width: 4px; }
+        .tono-ambar .mark { background: #fef3c7; color: #b45309; }
+        .tono-ambar h4,
+        .tono-ambar .art,
+        .tono-ambar .limite { color: #b45309; }
+        .tono-ambar .pill { background: #fef3c7; color: #b45309; border: 1px solid #f59e0b; }
+        .tono-ambar .pill:hover { background: #fde68a; }
+        .tono-ambar input:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); }
+
+        .tono-verde { border-color: #16a34a; border-top-width: 4px; }
+        .tono-verde .mark { background: #dcfce7; color: #15803d; }
+        .tono-verde h4,
+        .tono-verde .art { color: #15803d; }
+        .tono-verde .limite { color: #059669; }
+        .tono-verde .tag { color: #15803d; background: #f0fdf4; border: 1px solid #86efac; }
+        .tono-verde .pill { background: #f0fdf4; color: #15803d; border: 1px solid #86efac; }
+        .tono-verde .pill:hover { background: #dcfce7; border-color: #16a34a; }
+        .tono-verde input:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15); }
+
+        .tono-morado { border-color: #8b5cf6; border-top-width: 4px; }
+        .tono-morado .mark { background: #f3e8ff; color: #6d28d9; }
+        .tono-morado h4,
+        .tono-morado .art,
+        .tono-morado .limite { color: #6d28d9; }
+        .tono-morado .pill { background: #f3e8ff; color: #6d28d9; border: 1px solid #8b5cf6; }
+        .tono-morado .pill:hover { background: #e9d5ff; }
+        .tono-morado input:focus { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2); }
         .center-btn { display: flex; justify-content: center; margin-top: 22px; }
 
         /* ===== Comparación ===== */
@@ -424,7 +485,7 @@
         /* ===== Footer ===== */
         .footer { border-top: 1px solid var(--borde); background: #fff; }
         .footer-inner {
-            max-width: 1120px; margin: 0 auto;
+            max-width: 1200px; margin: 0 auto;
             padding: 28px clamp(14px, 4vw, 32px);
             display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;
         }
@@ -432,6 +493,131 @@
         .footer-brand img { width: 46px; height: 46px; border-radius: 10px; object-fit: cover; align-self: flex-start; }
         .footer-name { font-weight: 700; font-size: 0.95rem; }
         .footer-legal { font-size: 0.76rem; color: var(--nota); line-height: 1.5; }
+
+        /* ===== Agregar a pantalla de inicio ===== */
+        .install-invite {
+            background: #fff;
+            border: 1px solid #d9e2f8;
+            border-radius: 16px;
+            box-shadow: var(--sombra);
+            padding: 18px 20px;
+        }
+        .install-invite-inner {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .install-invite img {
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
+            flex: none;
+            object-fit: cover;
+        }
+        .install-invite-copy { min-width: 0; flex: 1; }
+        .install-invite-copy p {
+            font-weight: 700;
+            font-size: 1.02rem;
+            line-height: 1.35;
+            margin-bottom: 12px;
+            color: var(--tinta);
+        }
+        .install-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 40;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 16px;
+            background: rgba(15, 17, 36, 0.46);
+        }
+        .install-modal-card {
+            position: relative;
+            width: min(440px, 100%);
+            max-height: min(88vh, 640px);
+            overflow: auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 18px 50px rgba(15, 17, 36, 0.22);
+            padding: 22px 20px 18px;
+            text-align: left;
+        }
+        .install-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 10px;
+            background: #f2f4f8;
+            color: var(--tinta);
+            font: 600 1.3rem/1 'Manrope', 'ManropeLocal', sans-serif;
+            cursor: pointer;
+        }
+        .install-modal-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 6px 28px 16px 0;
+        }
+        .install-modal-brand img {
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
+            flex: none;
+        }
+        .install-modal-brand h3 {
+            font-size: 1.15rem;
+            line-height: 1.25;
+        }
+        .install-modal-brand p {
+            margin-top: 4px;
+            color: var(--tinta-2);
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+        .install-steps {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .install-steps li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f7f8fc;
+            border: 1px solid var(--borde);
+            border-radius: 14px;
+            padding: 12px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .install-step-ico {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #fff;
+            border: 1px solid #d9e2f8;
+            color: var(--azul);
+            display: grid;
+            place-items: center;
+            flex: none;
+        }
+        .install-glyph {
+            width: 26px;
+            height: 26px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .install-glyph.dots { fill: currentColor; stroke: none; }
+        .install-done { width: 100%; margin-top: 14px; }
+        body.install-open { overflow: hidden; }
 
         /* ===== Responsivo ===== */
         @media (max-width: 960px) {
@@ -449,6 +635,9 @@
             .roi-highlight { flex-direction: column; align-items: flex-start; }
             .cochinito { height: 88px; }
             .footer-inner .btn-primary { width: 100%; }
+            .install-invite-inner { align-items: flex-start; }
+            .install-invite .btn-primary { width: 100%; }
+            .install-modal { align-items: flex-end; padding: 10px; }
         }
     </style>
 </head>
@@ -459,12 +648,17 @@
                 <div class="eyebrow">Ahora Seguros · Planeación Fiscal y Retiro · LISR 2026</div>
                 <h1>Calculadora Fiscal 2026</h1>
                 <p class="sub">Rodrigo De la Mora Elizondo · Asesor en seguros de vida y retiro</p>
+                <a class="whatsapp" href="https://rebrand.ly/Ahorra-para-tu-Retiro" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 2.1 17.8L1 23l5.3-1.1A11 11 0 0 0 12 23a11 11 0 0 0 8.5-19.5zM12 21a9 9 0 0 1-4.6-1.3l-.3-.2-3.1.8.8-3-.2-.3A9 9 0 1 1 12 21zm5-6.8c-.3-.1-1.6-.8-1.8-.9s-.4-.1-.6.2-.7.9-.9 1.1-.3.2-.6.1a7.4 7.4 0 0 1-2.2-1.4 8.1 8.1 0 0 1-1.5-1.9c-.2-.3 0-.4.1-.6l.4-.4.2-.4a.5.5 0 0 0 0-.5c-.1-.1-.6-1.5-.8-2s-.4-.5-.6-.5h-.5a1 1 0 0 0-.7.3 2.9 2.9 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c.4.2.9.3 1.4.4.5.1 1 .1 1.4 0a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.3c-.1-.1-.3-.2-.6-.3z"/></svg>
+                    81 1616 0201
+                </a>
             </div>
             <img src="logo-ahora.gif" alt="Ahora Seguros" class="hero-logo">
         </div>
     </header>
 
     <main class="wrap">
+        <p class="pasos-intro">Sigue los siguientes pasos para calcular tu pago de impuestos</p>
         <section class="card input-card">
             <div class="sec"><b>1</b>Tu ingreso</div>
             <h2>Ingresa tu Salario Mensual</h2>
@@ -520,70 +714,71 @@
                 </div>
 
                 <div class="estimulos-grid">
-                    <div class="estimulo-item">
+                    <div class="estimulo-item tono-ambar">
                         <h4>
-                            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 3.8 20.5 11"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg>
+                            <span class="mark" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M3.5 11 12 3.8 20.5 11"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></span>
                             Gastos Personales
                         </h4>
-                        <p><strong>Límite:</strong> 15% del ingreso anual (5 UMAs Anuales = $213,973)<br>
-                        <strong>Incluye:</strong> Gastos médicos, dentales, funerarios, donativos, intereses hipotecarios, colegiaturas
-                        <span class="art">Art. 151 Fracción VI LISR</span></p>
-
-                        <div class="ded-head">
-                            <label for="gastos-personales">Monto Anual</label>
-                            <button type="button" class="pill" data-tope="gastosPersonales" data-input="gastos-personales">
-                                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>Usar tope máximo
-                            </button>
+                        <div class="estimulo-copy">
+                            <p><strong>Límite:</strong> 15% del ingreso anual (5 UMAs Anuales = $213,973)</p>
+                            <p><strong>Incluye:</strong> Gastos médicos, dentales, funerarios, donativos, intereses hipotecarios, colegiaturas</p>
+                            <p class="art">Art. 151 Fracción VI LISR</p>
                         </div>
-                        <div class="deduccion-input-integrado" style="border:0;padding:0;margin-top:0">
+                        <div class="deduccion-bloque">
+                            <div class="ded-head">
+                                <label for="gastos-personales">Monto Anual</label>
+                                <button type="button" class="pill" data-tope="gastosPersonales" data-input="gastos-personales">
+                                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>Usar tope máximo
+                                </button>
+                            </div>
                             <div class="limite">(Límite: $45,000)</div>
                             <input type="number" id="gastos-personales" placeholder="0" min="0" max="45000" inputmode="numeric" pattern="[0-9]*">
                         </div>
                     </div>
 
-                    <div class="estimulo-item destacado">
-                        <div><span class="tag">Principal estímulo para el retiro · Art. 151 Fracc. V LISR</span></div>
-                        <div class="estimulo-top" style="align-items:center">
-                            <div style="min-width:0">
-                                <h4>
-                                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18"/><path d="M16.5 7.2c-.7-1.2-2.3-1.9-4.5-1.9-2.6 0-4.2 1.2-4.2 3 0 4.2 9 2.100 9 6.500 0 1.800-1.800 3.200-4.800 3.200-2.300 0-4.100-.8-4.900-2.200"/></svg>
-                                    Plan Personal de Retiro (PPR)
-                                </h4>
-                            </div>
+                    <div class="estimulo-item tono-verde">
+                        <span class="tag">PRINCIPAL ESTÍMULO · ART. 151 FRACC. V</span>
+                        <div class="estimulo-top">
+                            <h4>
+                                <span class="mark" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M16.5 7.2c-.7-1.2-2.3-1.9-4.5-1.9-2.6 0-4.2 1.2-4.2 3 0 4.2 9 2.1 9 6.5 0 1.8-1.8 3.2-4.8 3.2-2.3 0-4.1-.8-4.9-2.2"/></svg></span>
+                                Plan Personal de Retiro (PPR)
+                            </h4>
                             <img class="cochinito" src="ppr-cochinito.png" alt="Cochinito de ahorro para el retiro">
                         </div>
-                        <p><strong>Límite:</strong> 10% del ingreso anual (5 UMAs Anuales = $213,973)<br>
-                        <strong>Beneficio:</strong> Deducible 100%, retiro después de 5 años
-                        <span class="art">Art. 151 Fracción V LISR</span></p>
-
-                        <div class="ded-head">
-                            <label for="ppr">Monto Anual</label>
-                            <button type="button" class="pill" data-tope="ppr" data-input="ppr">
-                                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>Usar tope máximo
-                            </button>
+                        <div class="estimulo-copy">
+                            <p><strong>Límite:</strong> 10% del ingreso anual (5 UMAs Anuales = $213,973)</p>
+                            <p><strong>Beneficio:</strong> Deducible 100%, retiro después de 5 años</p>
+                            <p class="art">Art. 151 Fracción V LISR</p>
                         </div>
-                        <div class="deduccion-input-integrado" style="border:0;padding:0;margin-top:0">
+                        <div class="deduccion-bloque">
+                            <div class="ded-head">
+                                <label for="ppr">Monto Anual</label>
+                                <button type="button" class="pill" data-tope="ppr" data-input="ppr">
+                                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>Usar tope máximo
+                                </button>
+                            </div>
                             <div class="limite">(Límite: $30,000)</div>
                             <input type="number" id="ppr" placeholder="0" min="0" max="30000" inputmode="numeric" pattern="[0-9]*">
                         </div>
                     </div>
 
-                    <div class="estimulo-item">
+                    <div class="estimulo-item tono-morado">
                         <h4>
-                            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.500 12 4l9 5.500"/><path d="M5 10v8"/><path d="M9.700 10v8"/><path d="M14.300 10v8"/><path d="M19 10v8"/><path d="M3.500 20h17"/></svg>
+                            <span class="mark" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10v8"/><path d="M9.7 10v8"/><path d="M14.3 10v8"/><path d="M19 10v8"/><path d="M3.5 20h17"/></svg></span>
                             Cuenta Especial para el Ahorro
                         </h4>
-                        <p><strong>Límite:</strong> $152,000 anuales<br>
-                        <strong>Beneficio:</strong> Complementa al PPR, mínimo 5 años de permanencia (diferimiento fiscal)
-                        <span class="art">Art. 185 LISR</span></p>
-
-                        <div class="ded-head">
-                            <label for="cuenta-especial">Monto Anual</label>
-                            <button type="button" class="pill" data-tope="cuentaEspecial" data-input="cuenta-especial">
-                                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>Usar tope máximo
-                            </button>
+                        <div class="estimulo-copy">
+                            <p><strong>Límite:</strong> $152,000 anuales</p>
+                            <p><strong>Beneficio:</strong> Complementa al PPR, mínimo 5 años de permanencia (diferimiento fiscal)</p>
+                            <p class="art">Art. 185 LISR</p>
                         </div>
-                        <div class="deduccion-input-integrado" style="border:0;padding:0;margin-top:0">
+                        <div class="deduccion-bloque">
+                            <div class="ded-head">
+                                <label for="cuenta-especial">Monto Anual</label>
+                                <button type="button" class="pill" data-tope="cuentaEspecial" data-input="cuenta-especial">
+                                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>Usar tope máximo
+                                </button>
+                            </div>
                             <div class="limite">(Límite: $152,000)</div>
                             <input type="number" id="cuenta-especial" placeholder="0" min="0" max="152000" inputmode="numeric" pattern="[0-9]*">
                         </div>
@@ -665,6 +860,16 @@
                     <div class="nota-calculo" id="nota-calculo">
                         Inversión: $0 - Ahorro: $0 = Costo Real: $0
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="install-invite" class="install-invite hidden" hidden>
+            <div class="install-invite-inner">
+                <img src="apple-touch-icon.png" alt="Ícono de la app Ahora Seguros" width="64" height="64">
+                <div class="install-invite-copy">
+                    <p>Guarda esta calculadora como App en tu celular o iPad</p>
+                    <button type="button" id="install-btn" class="btn-primary">📲 Agregar a pantalla de inicio</button>
                 </div>
             </div>
         </section>
@@ -921,6 +1126,157 @@
                 calcularConDeducciones();
             });
         });
+    </script>
+
+    <div id="install-modal" class="install-modal hidden" hidden role="dialog" aria-modal="true" aria-labelledby="install-modal-title">
+        <div class="install-modal-card">
+            <button type="button" class="install-close" aria-label="Cerrar">×</button>
+            <div class="install-modal-brand">
+                <img src="apple-touch-icon.png" alt="Ícono de Ahora Seguros" width="64" height="64">
+                <div>
+                    <h3 id="install-modal-title">Agregar a pantalla de inicio</h3>
+                    <p>Ahora Fiscal</p>
+                </div>
+            </div>
+            <ol class="install-steps" id="install-steps-ios" hidden>
+                <li>
+                    <span class="install-step-ico" aria-hidden="true">
+                        <svg class="install-glyph" viewBox="0 0 24 24"><path d="M12 15.2V3.8"/><path d="m8 7.6 4-4 4 4"/><path d="M7 10.2H6.2A2.2 2.2 0 0 0 4 12.4V18a2.2 2.2 0 0 0 2.2 2.2h11.6A2.2 2.2 0 0 0 20 18v-5.6a2.2 2.2 0 0 0-2.2-2.2H17"/></svg>
+                    </span>
+                    <span>Toca el botón <strong>Compartir</strong> en la barra de tu navegador.</span>
+                </li>
+                <li>
+                    <span class="install-step-ico" aria-hidden="true">
+                        <svg class="install-glyph" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="M12 8.2v7.6"/><path d="M8.2 12h7.6"/></svg>
+                    </span>
+                    <span>Elige <strong>«Agregar a pantalla de inicio»</strong> y toca <strong>«Agregar»</strong>.</span>
+                </li>
+            </ol>
+            <ol class="install-steps" id="install-steps-android" hidden>
+                <li>
+                    <span class="install-step-ico" aria-hidden="true">
+                        <svg class="install-glyph dots" viewBox="0 0 24 24"><circle cx="12" cy="5.5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="18.5" r="1.6"/></svg>
+                    </span>
+                    <span>Toca el menú <strong>⋮</strong> del navegador.</span>
+                </li>
+                <li>
+                    <span class="install-step-ico" aria-hidden="true">
+                        <svg class="install-glyph" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+                    </span>
+                    <span>Selecciona <strong>«Agregar a la pantalla principal»</strong> o <strong>«Instalar aplicación»</strong>.</span>
+                </li>
+            </ol>
+            <button type="button" class="btn-primary install-done" id="install-done">Entendido</button>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const invite = document.getElementById('install-invite');
+            const modal = document.getElementById('install-modal');
+            const stepsIos = document.getElementById('install-steps-ios');
+            const stepsAndroid = document.getElementById('install-steps-android');
+            const installBtn = document.getElementById('install-btn');
+            let deferredPrompt = null;
+            let ultimoFoco = null;
+
+            function esIosOIpados() {
+                const ua = navigator.userAgent || '';
+                const iPhoneOIpod = /iPhone|iPod/.test(ua);
+                const iPad = /iPad/.test(ua);
+                const iPadOS = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+                return iPhoneOIpod || iPad || iPadOS;
+            }
+
+            function esAndroid() {
+                return /Android/i.test(navigator.userAgent || '');
+            }
+
+            function esNavegadorMovilOTablet() {
+                return esIosOIpados() || esAndroid();
+            }
+
+            function abiertaComoApp() {
+                return window.matchMedia('(display-mode: standalone)').matches || !!window.navigator.standalone;
+            }
+
+            function mostrarInvitacion() {
+                const visible = esNavegadorMovilOTablet()
+                    && !window.matchMedia('(display-mode: standalone)').matches
+                    && !window.navigator.standalone;
+                invite.hidden = !visible;
+                invite.classList.toggle('hidden', !visible);
+            }
+
+            function abrirGuia(tipo) {
+                stepsIos.hidden = tipo !== 'ios';
+                stepsAndroid.hidden = tipo !== 'android';
+                modal.hidden = false;
+                modal.classList.remove('hidden');
+                document.body.classList.add('install-open');
+                ultimoFoco = document.activeElement;
+                modal.querySelector('.install-close').focus();
+            }
+
+            function cerrarGuia() {
+                if (modal.hidden) return;
+                modal.hidden = true;
+                modal.classList.add('hidden');
+                document.body.classList.remove('install-open');
+                if (ultimoFoco && typeof ultimoFoco.focus === 'function') ultimoFoco.focus();
+            }
+
+            window.addEventListener('beforeinstallprompt', (event) => {
+                if (!esAndroid() || esIosOIpados() || abiertaComoApp()) return;
+                event.preventDefault();
+                deferredPrompt = event;
+            });
+
+            window.addEventListener('appinstalled', () => {
+                deferredPrompt = null;
+                invite.hidden = true;
+                invite.classList.add('hidden');
+                cerrarGuia();
+            });
+
+            installBtn.addEventListener('click', async () => {
+                if (esIosOIpados()) {
+                    abrirGuia('ios');
+                    return;
+                }
+                if (deferredPrompt) {
+                    const promptEvent = deferredPrompt;
+                    deferredPrompt = null;
+                    try {
+                        await promptEvent.prompt();
+                        const choice = await promptEvent.userChoice;
+                        if (choice && choice.outcome === 'accepted') {
+                            invite.hidden = true;
+                            invite.classList.add('hidden');
+                        }
+                    } catch (err) {
+                        abrirGuia('android');
+                    }
+                    return;
+                }
+                abrirGuia('android');
+            });
+
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) cerrarGuia();
+            });
+            document.getElementById('install-done').addEventListener('click', cerrarGuia);
+            modal.querySelector('.install-close').addEventListener('click', cerrarGuia);
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') cerrarGuia();
+            });
+
+            mostrarInvitacion();
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./sw.js').catch(() => {});
+            }
+        })();
     </script>
 </body>
 </html>

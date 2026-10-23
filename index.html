@@ -4,685 +4,604 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Fiscal 2026 - Ahora Seguros</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="shortcut icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
-    
+
+    <!-- Tipografía Boreal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Fallback local inmediato */
+        @font-face {
+            font-family: 'MontserratLocal';
+            src: url('file:///usr/share/fonts/truetype/sand-box/google/Montserrat/Montserrat-VariableFont_wght.ttf') format('truetype');
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
         }
+        @font-face {
+            font-family: 'ManropeLocal';
+            src: url('file:///usr/share/fonts/truetype/sand-box/google/Manrope/Manrope-VariableFont_wght.ttf') format('truetype');
+            font-weight: 200 800;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --marino: #0D0D6B;
+            --azul: #1A1AAF;
+            --fondo: #F2F4F8;
+            --tinta: #0F1124;
+            --tinta-2: #596173;
+            --nota: #8A93A5;
+            --detalle: #4E9CF7;
+            --borde: #E5E7EB;
+            --alerta: #B3261E;
+            --sombra: 0 2px 8px rgba(15, 17, 36, 0.04);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: #1f2937;
-            line-height: 1.6;
+            font-family: 'Manrope', 'ManropeLocal', 'Segoe UI', Tahoma, sans-serif;
+            font-variant-numeric: tabular-nums;
+            background: var(--fondo);
+            color: var(--tinta);
+            line-height: 1.55;
             min-height: 100vh;
-            padding: clamp(10px, 3vw, 20px);
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 1200px;
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', 'MontserratLocal', 'Manrope', 'ManropeLocal', sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--tinta);
+        }
+
+        svg.ico {
+            width: 1.25em; height: 1.25em;
+            flex: none;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .hidden { display: none !important; }
+
+        /* ===== Hero ===== */
+        .hero { background: #FFFFFF; border-bottom: 1px solid #E5E7EB; }
+        .hero-inner {
+            max-width: 1120px;
             margin: 0 auto;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            color: white;
-            padding: clamp(20px, 5vw, 40px);
-            position: relative;
+            padding: clamp(22px, 4vw, 34px) clamp(18px, 4vw, 32px);
             display: flex;
+            flex-direction: row;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
+            gap: clamp(20px, 3.5vw, 32px);
         }
-
-        .header h1 {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
+        .hero-logo { width: 88px; height: 88px; border-radius: 14px; flex: none; object-fit: cover; }
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
             font-weight: 700;
-            margin-bottom: 4px;
+            color: var(--nota);
+            margin-bottom: 10px;
+        }
+        .hero h1 {
+            color: #0F1124;
+            font-weight: 700;
+            font-size: clamp(1.9rem, 5vw, 3rem);
+            line-height: 1.12;
+        }
+        .hero .sub {
+            margin-top: 8px;
+            font-size: clamp(0.9rem, 2.4vw, 1.05rem);
+            font-weight: 500;
+            color: #596173;
         }
 
-        .header p {
-            font-size: clamp(0.875rem, 2.5vw, 1.125rem);
-            opacity: 0.9;
+        /* ===== Layout ===== */
+        .wrap {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: clamp(16px, 4vw, 32px) clamp(14px, 4vw, 32px) 40px;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(14px, 3vw, 22px);
         }
-
-        .logo {
-            width: clamp(60px, 15vw, 100px);
-            height: auto;
-            border-radius: 8px;
+        .card {
+            background: #fff;
+            border: 1px solid var(--borde);
+            border-radius: 16px;
+            box-shadow: var(--sombra);
+            padding: clamp(18px, 4vw, 28px);
         }
-
-        .main-content {
-            padding: clamp(20px, 5vw, 40px);
-        }
-
-        .input-section {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .input-section h2 {
-            font-size: clamp(1.25rem, 3.5vw, 1.875rem);
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: #1f2937;
-        }
-
-        .input-group {
+        .sec {
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--azul);
+            font-weight: 800;
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
         }
-
-        .currency-symbol {
-            font-size: clamp(1.125rem, 3vw, 1.5rem);
-            font-weight: 600;
-            color: #374151;
+        .sec b {
+            display: inline-grid;
+            place-items: center;
+            width: 22px; height: 22px;
+            border-radius: 7px;
+            background: var(--azul);
+            color: #fff;
+            letter-spacing: 0;
         }
+        .sec b .ico { width: 14px; height: 14px; }
 
+        /* ===== Entrada ===== */
+        .input-card h2 { font-size: clamp(1.2rem, 3.2vw, 1.6rem); margin-bottom: 18px; }
+        .input-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; }
+        .salary-field {
+            display: flex; align-items: center; gap: 8px;
+            border: 1.5px solid var(--borde);
+            border-radius: 12px;
+            padding: 0 16px;
+            background: #fff;
+            flex: 1 1 260px;
+            min-width: 0;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .salary-field:focus-within {
+            border-color: var(--azul);
+            box-shadow: 0 0 0 3px rgba(26, 26, 175, 0.12);
+        }
+        .currency-symbol { font-size: 1.4rem; font-weight: 600; color: var(--tinta-2); }
         .salary-input {
-            font-size: clamp(1.125rem, 3vw, 1.5rem);
-            padding: clamp(12px, 3vw, 16px);
-            border: 2px solid #d1d5db;
-            border-radius: 8px;
-            width: clamp(200px, 50vw, 300px);
-            text-align: center;
-            font-weight: 600;
-            transition: all 0.2s ease;
+            flex: 1; min-width: 0;
+            border: none; outline: none; background: transparent;
+            font: 700 1.5rem 'Manrope', 'ManropeLocal', sans-serif;
+            font-variant-numeric: tabular-nums;
+            color: var(--tinta);
+            padding: 14px 0;
         }
-
-        .salary-input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .currency-label {
-            font-size: clamp(0.875rem, 2.5vw, 1rem);
-            color: #6b7280;
-            font-weight: 500;
-        }
+        .salary-input::placeholder { color: #C3C9D6; }
+        .currency-label { font-size: 0.85rem; color: var(--nota); font-weight: 600; white-space: nowrap; }
+        .field-error { margin-top: 10px; font-size: 0.875rem; color: var(--alerta); font-weight: 600; }
 
         .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+            color: #fff;
             border: none;
-            padding: clamp(12px, 3vw, 16px) clamp(24px, 6vw, 32px);
-            font-size: clamp(1rem, 2.5vw, 1.125rem);
-            font-weight: 600;
-            border-radius: 8px;
+            padding: 14px 28px;
+            font: 700 1rem 'Manrope', 'ManropeLocal', sans-serif;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+            text-decoration: none;
+            transition: background .2s, transform .15s;
         }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px -3px rgba(59, 130, 246, 0.4);
-        }
-
-        .btn-secondary {
+        .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+        #calcular-deducciones-btn, .footer-inner .btn-primary {
             background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-            color: white;
-            border: none;
-            padding: clamp(10px, 2.5vw, 14px) clamp(20px, 5vw, 28px);
-            font-size: clamp(0.875rem, 2.5vw, 1rem);
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin: 12px 0;
-            box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.3);
-            width: 100%;
-            max-width: 250px;
+            box-shadow: 0 4px 10px rgba(22, 163, 74, 0.25);
+            color: #fff;
         }
+        .btn-primary:focus-visible, .pill:focus-visible { outline: 3px solid rgba(78, 156, 247, 0.55); outline-offset: 2px; }
 
-        .btn-secondary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 12px -2px rgba(22, 163, 74, 0.4);
-        }
-
+        /* ===== Resultados ===== */
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: clamp(12px, 3vw, 20px);
-            margin: 24px 0;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
         }
-
         .result-card {
-            background: white;
-            padding: clamp(16px, 4vw, 24px);
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            transition: all 0.2s ease;
+            background: #fff;
+            border: 1px solid var(--borde);
+            border-radius: 14px;
+            box-shadow: var(--sombra);
+            padding: 18px;
+            min-width: 0;
         }
-
-        .result-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
         .result-card h3 {
-            font-size: clamp(0.875rem, 2.5vw, 1rem);
-            font-weight: 600;
-            color: #6b7280;
+            font-family: 'Manrope', 'ManropeLocal', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--tinta-2);
             margin-bottom: 8px;
+            display: flex; align-items: center; gap: 6px;
         }
-
-        .result-card .amount {
-            font-size: clamp(1.25rem, 4vw, 1.875rem);
+        .amount {
             font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 4px;
+            font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+            color: var(--azul);
+            line-height: 1.2;
+            white-space: nowrap;
         }
+        .rate { font-size: 0.82rem; color: var(--nota); font-weight: 600; margin-top: 2px; }
+        .result-card.sat-warning { background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); border: 1.5px solid #ef4444; }
+        .result-card.sat-warning h3, .result-card.sat-warning .amount { color: #dc2626; }
 
-        .result-card .rate {
-            font-size: clamp(0.75rem, 2vw, 0.875rem);
-            color: #6b7280;
-            font-weight: 500;
-        }
-
-        .result-card.sat-warning {
+        .sat-message {
+            display: flex; gap: 12px; align-items: flex-start;
             background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
-            border: 2px solid #ef4444;
+            border: 1.5px solid #ef4444;
+            border-radius: 14px;
+            box-shadow: var(--sombra);
+            padding: 16px 20px;
             color: #dc2626;
+            font-weight: 600;
         }
+        .sat-message .ico { color: #dc2626; width: 22px; height: 22px; margin-top: 2px; }
+        .sat-message strong { color: #dc2626; font-weight: 800; white-space: nowrap; }
 
-        .result-card.sat-warning h3 {
-            color: #dc2626;
-            font-weight: 700;
-        }
-
-        .result-card.sat-warning .amount {
-            color: #dc2626;
-            font-weight: 800;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .deducciones-section {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            border-radius: 12px;
-            padding: clamp(16px, 4vw, 32px);
-            margin: 24px 0;
-            border: 1px solid #16a34a;
-        }
-
-        .deducciones-section h3 {
-            color: #15803d;
-            font-size: clamp(1.125rem, 3.5vw, 1.375rem);
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
+        /* ===== Estímulos ===== */
+        .estimulos-card { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1px solid #16a34a; }
+        .estimulos-card .sec { color: #15803d; }
+        .estimulos-card .sec b { background: #15803d; }
+        .estimulos-head h2 { font-size: clamp(1.2rem, 3.2vw, 1.6rem); color: #15803d; }
+        .estimulos-head p { color: var(--tinta-2); font-size: 0.92rem; margin-top: 4px; margin-bottom: 20px; }
         .estimulos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: clamp(16px, 4vw, 24px);
-            margin-bottom: 24px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
         }
-
         .estimulo-item {
-            background: white;
-            padding: clamp(16px, 4vw, 20px);
-            border-radius: 10px;
+            background: #FFFFFF;
             border: 1px solid #16a34a;
-            box-shadow: 0 2px 4px rgba(22, 163, 74, 0.1);
+            border-radius: 14px;
+            box-shadow: var(--sombra);
+            padding: 20px;
+            display: flex; flex-direction: column;
+            min-width: 0;
+            transition: border-color .2s;
         }
-
+        .estimulo-item:focus-within { border-color: #15803d; }
+        .estimulo-item.destacado { border-color: #86efac; border-width: 1px; box-shadow: 0 0 0 1px #16a34a; }
+        .estimulo-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
         .estimulo-item h4 {
-            color: #15803d;
-            font-size: clamp(1rem, 2.5vw, 1.125rem);
-            font-weight: 600;
+            font-size: 1.02rem;
+            display: flex; align-items: center; gap: 8px;
             margin-bottom: 8px;
+            color: #15803d;
         }
-
-        .estimulo-item p {
-            color: #374151;
-            font-size: clamp(0.875rem, 2vw, 0.9375rem);
-            line-height: 1.5;
-            margin-bottom: 16px;
+        .estimulo-item h4 .ico { color: #15803d; width: 20px; height: 20px; }
+        .tag {
+            display: inline-block;
+            font-size: 10px; font-weight: 800;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            color: #15803d;
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 999px;
+            padding: 3px 10px;
+            margin-bottom: 10px;
+            line-height: 1.4;
         }
+        .cochinito {
+            background: #FFFFFF;
+            height: 100px; width: auto;
+            flex: none;
+            mix-blend-mode: multiply;
+            border: 0; box-shadow: none;
+        }
+        .estimulo-item p { color: var(--tinta-2); font-size: 0.88rem; line-height: 1.5; }
+        .estimulo-item p strong { color: var(--tinta); font-weight: 700; }
+        .estimulo-item .art { display: block; margin-top: 6px; color: #059669; font-weight: 600; font-size: 0.8rem; }
 
         .deduccion-input-integrado {
-            text-align: center;
-            margin-top: 16px;
+            margin-top: auto;
             padding-top: 16px;
-            border-top: 1px solid #d1fae5;
+            border-top: 1px solid var(--borde);
         }
-
-        .deduccion-input-integrado label {
-            display: block;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 4px;
-            font-size: clamp(0.875rem, 2.5vw, 1rem);
+        .ded-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; margin-top: 16px; }
+        .deduccion-input-integrado label { font-weight: 700; font-size: 0.9rem; color: var(--tinta); }
+        .deduccion-input-integrado .limite { font-size: 0.8rem; color: #059669; font-weight: 600; margin-bottom: 8px; }
+        .pill {
+            display: inline-flex; align-items: center; gap: 5px;
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #86efac;
+            border-radius: 999px;
+            padding: 4px 12px;
+            font: 700 0.76rem 'Manrope', 'ManropeLocal', sans-serif;
+            cursor: pointer;
+            transition: background .2s, border-color .2s;
+            white-space: nowrap;
         }
-
-        .deduccion-input-integrado .limite {
-            font-size: clamp(0.75rem, 2vw, 0.875rem);
-            color: #059669;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
+        .pill:hover { background: #dcfce7; border-color: #16a34a; }
+        .pill .ico { width: 13px; height: 13px; }
         .deduccion-input-integrado input {
             width: 100%;
-            padding: clamp(10px, 2.5vw, 12px);
-            border: 2px solid #d1d5db;
-            border-radius: 6px;
-            font-size: clamp(0.875rem, 2.5vw, 1rem);
-            text-align: center;
-            transition: all 0.2s ease;
+            padding: 11px 14px;
+            border: 1.5px solid var(--borde);
+            border-radius: 10px;
+            font: 700 1rem 'Manrope', 'ManropeLocal', sans-serif;
+            font-variant-numeric: tabular-nums;
+            color: var(--tinta);
+            transition: border-color .2s, box-shadow .2s;
         }
-
         .deduccion-input-integrado input:focus {
             outline: none;
             border-color: #16a34a;
-            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
         }
+        .center-btn { display: flex; justify-content: center; margin-top: 22px; }
 
-        .center-btn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .comparison-section {
-            margin: 32px 0;
-        }
-
-        .comparison-section h3 {
-            font-size: clamp(1.125rem, 3.5vw, 1.375rem);
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #1f2937;
-        }
-
+        /* ===== Comparación ===== */
         .comparison-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: clamp(12px, 3vw, 20px);
-            margin: 20px 0;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
         }
-
         .comparison-card {
-            background: white;
-            padding: clamp(16px, 4vw, 20px);
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            background: #fff;
+            border: 1px solid var(--borde);
+            border-radius: 14px;
+            box-shadow: var(--sombra);
+            padding: 18px;
+            min-width: 0;
         }
-
         .comparison-card h4 {
-            font-size: clamp(0.875rem, 2.5vw, 1rem);
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #374151;
-        }
-
-        .comparison-card .amount {
-            font-size: clamp(0.75rem, 2.8vw, 1.5rem);
+            font-family: 'Manrope', 'ManropeLocal', sans-serif;
             font-weight: 700;
-            color: #1f2937;
-            margin: 6px 0;
-            word-break: break-all;
-            line-height: 1.2;
-            min-height: 1.5em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--tinta-2);
+            margin-bottom: 8px;
+            display: flex; align-items: center; gap: 6px;
         }
+        .comparison-card h4 .ico { color: var(--azul); }
+        .comparison-card.savings-card { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1.5px solid #16a34a; }
+        .comparison-card.savings-card h4, .comparison-card.savings-card h4 .ico, .comparison-card.savings-card .amount { color: #15803d; }
+        .comparison-card .amount { color: var(--tinta); }
+        .comparison-card.time-card { background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 1.5px solid #2563eb; }
+        .comparison-card.time-card h4, .comparison-card.time-card h4 .ico, .comparison-card.time-card .amount { color: #1d4ed8; }
 
-        .comparison-card .rate {
-            font-size: clamp(0.75rem, 2vw, 0.875rem);
-            color: #6b7280;
-            font-weight: 500;
-        }
-
-        .savings-card {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            border: 1px solid #16a34a;
-            color: #15803d;
-        }
-
-        .time-card {
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-            border: 1px solid #2563eb;
-            color: #1d4ed8;
-        }
-
-        .financial-analysis {
+        .card.financial-analysis {
             background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            border-radius: 12px;
-            padding: clamp(16px, 4vw, 32px);
-            margin: 24px 0;
             border: 1px solid #3b82f6;
             position: relative;
             overflow: hidden;
         }
-
         .financial-analysis::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
+            content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px;
             background: linear-gradient(90deg, #3b82f6, #1d4ed8, #1e40af);
         }
-
         .financial-analysis h4 {
             color: #1e40af;
-            font-size: clamp(1.125rem, 3.5vw, 1.5rem);
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            flex-wrap: wrap;
+            font-size: 1.15rem;
+            display: flex; align-items: center; gap: 8px;
+            margin-bottom: 18px;
         }
-
-        .financial-metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: clamp(12px, 3vw, 20px);
-            margin: 20px 0;
-        }
-
+        .financial-analysis h4 .ico { color: #1e40af; }
+        .financial-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
         .metric-card {
-            background: white;
-            padding: clamp(12px, 3vw, 20px);
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid #3b82f6;
-            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+            background: #FFFFFF;
+            border: 1px solid #93c5fd;
+            border-radius: 12px;
+            padding: 16px;
+            min-width: 0;
         }
-
-        .metric-value {
-            font-size: clamp(1.125rem, 3.5vw, 1.5rem);
-            font-weight: 700;
-            color: #1e40af;
-            margin: 6px 0;
-            word-break: break-word;
-        }
-
-        .metric-label {
-            color: #2563eb;
-            font-size: clamp(0.75rem, 2vw, 0.875rem);
-            font-weight: 600;
-        }
+        .metric-value { font-weight: 700; font-size: clamp(1.15rem, 2.2vw, 1.5rem); color: #1e40af; white-space: nowrap; }
+        .metric-label { color: #2563eb; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
 
         .roi-highlight {
+            margin-top: 14px;
             background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
             border: 2px solid #16a34a;
-            padding: clamp(16px, 4vw, 24px);
-            border-radius: 10px;
-            text-align: center;
-            margin: 16px 0;
-        }
-
-        .roi-highlight .roi-title {
-            font-size: clamp(1rem, 3vw, 1.125rem);
-            font-weight: 600;
             color: #15803d;
-            margin-bottom: 6px;
+            border-radius: 14px;
+            padding: 22px;
+            display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
         }
+        .roi-title { display: flex; align-items: center; gap: 8px; font-weight: 700; font-family: 'Montserrat', 'MontserratLocal', sans-serif; font-size: 1rem; }
+        .roi-title .ico { color: #15803d; }
+        .roi-description { font-size: 0.85rem; color: #15803d; margin-top: 4px; }
+        .roi-value { color: #15803d; font-weight: 700; font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1; white-space: nowrap; }
 
-        .roi-highlight .roi-value {
-            font-size: clamp(1.875rem, 6vw, 2.5rem);
-            font-weight: 800;
-            color: #15803d;
-            margin: 6px 0;
+        .nota-calculo { color: #1d4ed8; font-size: 0.85rem; margin-top: 14px; font-weight: 500; }
+
+        .fade-update .amount, .fade-update .rate, .fade-update .metric-value, .fade-update .roi-value, .fade-update .nota-calculo {
+            animation: soft .45s ease;
         }
+        @keyframes soft { from { opacity: 0.25; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+        @media (prefers-reduced-motion: reduce) { .fade-update * { animation: none !important; } }
 
-        .roi-highlight .roi-description {
-            font-size: clamp(0.75rem, 2.5vw, 0.875rem);
-            color: #15803d;
+        /* ===== Footer ===== */
+        .footer { border-top: 1px solid var(--borde); background: #fff; }
+        .footer-inner {
+            max-width: 1120px; margin: 0 auto;
+            padding: 28px clamp(14px, 4vw, 32px);
+            display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;
         }
+        .footer-brand { display: flex; flex-direction: column; gap: 8px; max-width: 640px; }
+        .footer-brand img { width: 46px; height: 46px; border-radius: 10px; object-fit: cover; align-self: flex-start; }
+        .footer-name { font-weight: 700; font-size: 0.95rem; }
+        .footer-legal { font-size: 0.76rem; color: var(--nota); line-height: 1.5; }
 
-        .footer {
-            background: #f8fafc;
-            padding: clamp(20px, 5vw, 32px);
-            text-align: center;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
+        /* ===== Responsivo ===== */
+        @media (max-width: 960px) {
+            .estimulos-grid { grid-template-columns: 1fr; }
+            .results-grid, .comparison-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
-
-        .footer p {
-            color: #6b7280;
-            font-size: clamp(0.875rem, 2.5vw, 1rem);
-            margin: 0;
-        }
-
-        .btn-whatsapp {
-            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-            color: white;
-            text-decoration: none;
-            padding: clamp(12px, 3vw, 16px) clamp(24px, 6vw, 32px);
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: clamp(0.875rem, 2.5vw, 1rem);
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-whatsapp:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px -3px rgba(22, 163, 74, 0.4);
-        }
-
-        .nota-calculo {
-            color: #2563eb;
-            font-style: italic;
-            font-size: clamp(0.75rem, 2vw, 0.875rem);
-            text-align: center;
-            margin-top: 16px;
-            word-break: break-word;
-        }
-
-        /* Mejoras específicas para móviles */
         @media (max-width: 640px) {
-            body {
-                padding: 8px;
-            }
-            
-            .container {
-                border-radius: 12px;
-            }
-            
-            .header {
-                flex-direction: column;
-                text-align: center;
-                justify-content: center;
-                gap: 20px;
-                padding: 16px;
-            }
-            
-            .header div {
-                order: 2;
-            }
-            
-            .logo {
-                order: 1;
-                width: clamp(80px, 20vw, 120px);
-            }
-            
-            .main-content {
-                padding: 16px;
-            }
-            
-            .results-grid {
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-                gap: 12px;
-            }
-            
-            .comparison-grid {
-                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-                gap: 12px;
-            }
-
-            .comparison-card .amount {
-                font-size: clamp(0.7rem, 2.5vw, 1rem);
-                word-break: break-all;
-                line-height: 1.1;
-                padding: 2px;
-            }
-            
-            .financial-metrics {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                gap: 12px;
-            }
-        }
-
-        /* Mejoras para pantallas muy pequeñas */
-        @media (max-width: 480px) {
-            .comparison-grid {
-                grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-                gap: 8px;
-            }
-
-            .comparison-card {
-                padding: clamp(12px, 3vw, 16px);
-            }
-
-            .comparison-card .amount {
-                font-size: clamp(0.65rem, 2.2vw, 0.9rem);
-                line-height: 1.0;
-            }
+            .hero-inner { flex-direction: row; align-items: center; gap: 14px; }
+            .hero-logo { width: 68px; height: 68px; }
+            .btn-primary.full-m { width: 100%; }
+            .results-grid, .comparison-grid { gap: 10px; }
+            .result-card, .comparison-card { padding: 14px; }
+            .amount { font-size: 1.2rem; }
+            .financial-metrics { grid-template-columns: 1fr; }
+            .roi-highlight { flex-direction: column; align-items: flex-start; }
+            .cochinito { height: 88px; }
+            .footer-inner .btn-primary { width: 100%; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
+    <header class="hero">
+        <div class="hero-inner">
             <div>
+                <div class="eyebrow">Ahora Seguros · Planeación Fiscal y Retiro · LISR 2026</div>
                 <h1>Calculadora Fiscal 2026</h1>
-                <p>Rodrigo De la Mora Elizondo</p>
+                <p class="sub">Rodrigo De la Mora Elizondo · Asesor en seguros de vida y retiro</p>
             </div>
-            <img src="logo.png" alt="Ahora Seguros" class="logo">
-        </header>
+            <img src="logo-ahora.gif" alt="Ahora Seguros" class="hero-logo">
+        </div>
+    </header>
 
-        <main class="main-content">
-            <section class="input-section">
-                <h2>Ingresa tu Salario Mensual</h2>
-                <div class="input-group">
+    <main class="wrap">
+        <section class="card input-card">
+            <div class="sec"><b>1</b>Tu ingreso</div>
+            <h2>Ingresa tu Salario Mensual</h2>
+            <div class="input-row">
+                <div class="salary-field">
                     <span class="currency-symbol">$</span>
-                    <input type="number" id="salario-mensual" class="salary-input" placeholder="50,000" min="1" step="1000" inputmode="numeric" pattern="[0-9]*">
+                    <input type="number" id="salario-mensual" class="salary-input" placeholder="50,000" min="1" step="1000" inputmode="numeric" pattern="[0-9]*" aria-label="Salario mensual en pesos mexicanos">
                     <span class="currency-label">MXN mensuales</span>
                 </div>
-                <button id="calcular-btn" class="btn-primary">Calcular Impuestos</button>
-            </section>
+                <button id="calcular-btn" class="btn-primary full-m">Calcular Impuestos</button>
+            </div>
+            <div id="salario-error" class="field-error hidden" role="alert"></div>
+        </section>
 
-            <section id="results-section" class="hidden">
-                <div class="results-grid">
-                    <div class="result-card">
-                        <h3>Ingreso Anual</h3>
-                        <div class="amount" id="ingreso-anual">$0</div>
+        <section id="results-section" class="hidden" style="display:flex;flex-direction:column;gap:inherit;">
+            <div class="sec" style="margin-bottom:0"><b>2</b>Tu carga fiscal</div>
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>Ingreso Anual</h3>
+                    <div class="amount" id="ingreso-anual">$0</div>
+                </div>
+                <div class="result-card">
+                    <h3>ISR Anual</h3>
+                    <div class="amount" id="isr-anual">$0</div>
+                    <div class="rate" id="tasa-anual">Tasa: 0%</div>
+                </div>
+                <div class="result-card">
+                    <h3>ISR Mensual</h3>
+                    <div class="amount" id="isr-mensual">$0</div>
+                </div>
+                <div class="result-card sat-warning">
+                    <h3>
+                        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 2.8 19.5h18.4L12 3.5Z"/><path d="M12 10v4.2"/><path d="M12 17.2h.01"/></svg>
+                        Meses para el SAT
+                    </h3>
+                    <div class="amount" id="meses-sat">0</div>
+                </div>
+            </div>
+
+            <div id="sat-warning-message" class="sat-message hidden">
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 2.8 19.5h18.4L12 3.5Z"/><path d="M12 10v4.2"/><path d="M12 17.2h.01"/></svg>
+                <p>De los 12 meses que trabajas en el año, el SAT se queda con <strong id="meses-sat-text">0 meses</strong> del fruto de tu esfuerzo.</p>
+            </div>
+
+            <div class="card estimulos-card">
+                <div class="sec"><b>3</b>Estímulos fiscales</div>
+                <div class="estimulos-head">
+                    <h2 style="display:flex;align-items:center;gap:10px;">
+                        <svg class="ico" style="color:#15803d" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8"/></svg>
+                        Estímulos Fiscales Disponibles
+                    </h2>
+                    <p>Escribe cualquier monto anual o usa el tope máximo legal calculado para tu salario.</p>
+                </div>
+
+                <div class="estimulos-grid">
+                    <div class="estimulo-item">
+                        <h4>
+                            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 3.8 20.5 11"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg>
+                            Gastos Personales
+                        </h4>
+                        <p><strong>Límite:</strong> 15% del ingreso anual (5 UMAs Anuales = $213,973)<br>
+                        <strong>Incluye:</strong> Gastos médicos, dentales, funerarios, donativos, intereses hipotecarios, colegiaturas
+                        <span class="art">Art. 151 Fracción VI LISR</span></p>
+
+                        <div class="ded-head">
+                            <label for="gastos-personales">Monto Anual</label>
+                            <button type="button" class="pill" data-tope="gastosPersonales" data-input="gastos-personales">
+                                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>Usar tope máximo
+                            </button>
+                        </div>
+                        <div class="deduccion-input-integrado" style="border:0;padding:0;margin-top:0">
+                            <div class="limite">(Límite: $45,000)</div>
+                            <input type="number" id="gastos-personales" placeholder="0" min="0" max="45000" inputmode="numeric" pattern="[0-9]*">
+                        </div>
                     </div>
-                    <div class="result-card">
-                        <h3>ISR Anual</h3>
-                        <div class="amount" id="isr-anual">$0</div>
-                        <div class="rate" id="tasa-anual">Tasa: 0%</div>
+
+                    <div class="estimulo-item destacado">
+                        <div><span class="tag">Principal estímulo para el retiro · Art. 151 Fracc. V LISR</span></div>
+                        <div class="estimulo-top" style="align-items:center">
+                            <div style="min-width:0">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18"/><path d="M16.5 7.2c-.7-1.2-2.3-1.9-4.5-1.9-2.6 0-4.2 1.2-4.2 3 0 4.2 9 2.100 9 6.500 0 1.800-1.800 3.200-4.800 3.200-2.300 0-4.100-.8-4.900-2.200"/></svg>
+                                    Plan Personal de Retiro (PPR)
+                                </h4>
+                            </div>
+                            <img class="cochinito" src="ppr-cochinito.png" alt="Cochinito de ahorro para el retiro">
+                        </div>
+                        <p><strong>Límite:</strong> 10% del ingreso anual (5 UMAs Anuales = $213,973)<br>
+                        <strong>Beneficio:</strong> Deducible 100%, retiro después de 5 años
+                        <span class="art">Art. 151 Fracción V LISR</span></p>
+
+                        <div class="ded-head">
+                            <label for="ppr">Monto Anual</label>
+                            <button type="button" class="pill" data-tope="ppr" data-input="ppr">
+                                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>Usar tope máximo
+                            </button>
+                        </div>
+                        <div class="deduccion-input-integrado" style="border:0;padding:0;margin-top:0">
+                            <div class="limite">(Límite: $30,000)</div>
+                            <input type="number" id="ppr" placeholder="0" min="0" max="30000" inputmode="numeric" pattern="[0-9]*">
+                        </div>
                     </div>
-                    <div class="result-card">
-                        <h3>ISR Mensual</h3>
-                        <div class="amount" id="isr-mensual">$0</div>
-                    </div>
-                    <div class="result-card sat-warning">
-                        <h3>⚠️ Meses para el SAT</h3>
-                        <div class="amount" id="meses-sat">0</div>
+
+                    <div class="estimulo-item">
+                        <h4>
+                            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.500 12 4l9 5.500"/><path d="M5 10v8"/><path d="M9.700 10v8"/><path d="M14.300 10v8"/><path d="M19 10v8"/><path d="M3.500 20h17"/></svg>
+                            Cuenta Especial para el Ahorro
+                        </h4>
+                        <p><strong>Límite:</strong> $152,000 anuales<br>
+                        <strong>Beneficio:</strong> Complementa al PPR, mínimo 5 años de permanencia (diferimiento fiscal)
+                        <span class="art">Art. 185 LISR</span></p>
+
+                        <div class="ded-head">
+                            <label for="cuenta-especial">Monto Anual</label>
+                            <button type="button" class="pill" data-tope="cuentaEspecial" data-input="cuenta-especial">
+                                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>Usar tope máximo
+                            </button>
+                        </div>
+                        <div class="deduccion-input-integrado" style="border:0;padding:0;margin-top:0">
+                            <div class="limite">(Límite: $152,000)</div>
+                            <input type="number" id="cuenta-especial" placeholder="0" min="0" max="152000" inputmode="numeric" pattern="[0-9]*">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Leyenda impactante ANTES de Estímulos Fiscales -->
-                <div id="sat-warning-message" class="hidden" style="background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); border: 2px solid #ef4444; border-radius: 12px; padding: clamp(16px, 4vw, 24px); margin: 16px 0; text-align: center;">
-                    <p style="color: #dc2626; font-weight: 600; font-size: clamp(1rem, 3vw, 1.125rem); margin: 0;">
-                        ⚠️ De los 12 meses que trabajas en el año, el SAT se queda con <span id="meses-sat-text" style="font-weight: 800; font-size: clamp(1.125rem, 3.5vw, 1.25rem);">0 meses</span> del fruto de tu esfuerzo.
-                    </p>
+                <div class="center-btn">
+                    <button id="calcular-deducciones-btn" class="btn-primary full-m">Calcular con Deducciones</button>
                 </div>
+            </div>
 
-                <div class="deducciones-section">
-                    <h3>🎯 Estímulos Fiscales Disponibles</h3>
-                    
-                    <!-- Diseño unificado: Explicación + Campo en cada cuadro -->
-                    <div class="estimulos-grid">
-                        <div class="estimulo-item">
-                            <h4>🏠 Gastos Personales</h4>
-                            <p><strong>Límite:</strong> 15% del ingreso anual (5 UMAs Anuales = $213,973)<br>
-                            <strong>Incluye:</strong> Gastos médicos, dentales, funerarios, donativos, intereses hipotecarios, colegiaturas<br>
-                            <small style="color: #059669; font-weight: 500;"><em>Art. 151 Fracción VI LISR</em></small></p>
-                            
-                            <div class="deduccion-input-integrado">
-                                <label for="gastos-personales">Monto Anual</label>
-                                <div class="limite">(Límite: $45,000)</div>
-                                <input type="number" id="gastos-personales" placeholder="0" min="0" max="45000" inputmode="numeric" pattern="[0-9]*">
-                            </div>
-                        </div>
-                        
-                        <div class="estimulo-item">
-                            <h4>💰 Plan Personal de Retiro (PPR)</h4>
-                            <p><strong>Límite:</strong> 10% del ingreso anual (5 UMAs Anuales = $213,973)<br>
-                            <strong>Beneficio:</strong> Deducible 100%, retiro después de 5 años<br>
-                            <small style="color: #059669; font-weight: 500;"><em>Art. 151 Fracción V LISR</em></small></p>
-                            
-                            <div class="deduccion-input-integrado">
-                                <label for="ppr">Monto Anual</label>
-                                <div class="limite">(Límite: $30,000)</div>
-                                <input type="number" id="ppr" placeholder="0" min="0" max="30000" inputmode="numeric" pattern="[0-9]*">
-                            </div>
-                        </div>
-                        
-                        <div class="estimulo-item">
-                            <h4>🏦 Cuenta Especial para el Ahorro</h4>
-                            <p><strong>Límite:</strong> $152,000 anuales<br>
-                            <strong>Beneficio:</strong> Complementa al PPR, mínimo 5 años de permanencia<br>
-                            <small style="color: #059669; font-weight: 500;"><em>Art. 185 LISR</em></small></p>
-                            
-                            <div class="deduccion-input-integrado">
-                                <label for="cuenta-especial">Monto Anual</label>
-                                <div class="limite">(Límite: $152,000)</div>
-                                <input type="number" id="cuenta-especial" placeholder="0" min="0" max="152000" inputmode="numeric" pattern="[0-9]*">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="center-btn">
-                        <button id="calcular-deducciones-btn" class="btn-secondary">Calcular con Deducciones</button>
-                    </div>
-                </div>
-
-                <div id="comparison-section" class="comparison-section hidden">
-                    <h3>📊 Comparación de Escenarios</h3>
+            <div id="comparison-section" class="hidden" style="display:flex;flex-direction:column;gap:inherit;">
+                <div class="card">
+                    <div class="sec"><b>4</b>Resultado</div>
+                    <h3 style="font-size:1.3rem;margin-bottom:18px;display:flex;align-items:center;gap:8px;">
+                        <svg class="ico" style="color:var(--azul)" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M21 20H3"/></svg>
+                        Comparación de Escenarios
+                    </h3>
                     <div class="comparison-grid">
                         <div class="comparison-card">
                             <h4>Sin Deducciones</h4>
@@ -695,54 +614,75 @@
                             <div class="rate" id="tasa-con-ded">Tasa: 0%</div>
                         </div>
                         <div class="comparison-card savings-card">
-                            <h4>💰 Ahorro Total</h4>
+                            <h4>
+                                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6.500" width="18" height="12" rx="2.500"/><circle cx="12" cy="12.500" r="2.500"/><path d="M6.500 10v.01M17.500 15v.01"/></svg>
+                                Ahorro Total
+                            </h4>
                             <div class="amount" id="ahorro-total">$0</div>
                             <div class="rate" id="ahorro-porcentaje">0% menos</div>
                         </div>
                         <div class="comparison-card time-card">
-                            <h4>⏰ Tiempo Recuperado</h4>
+                            <h4>
+                                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.500 1.500"/><path d="M9.500 3h5"/></svg>
+                                Tiempo Recuperado
+                            </h4>
                             <div class="amount" id="tiempo-recuperado">0 días</div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="financial-analysis">
-                        <h4>💎 Análisis Financiero de tu Inversión</h4>
-                        <div class="financial-metrics">
-                            <div class="metric-card">
-                                <div class="metric-value" id="total-invertido">$0</div>
-                                <div class="metric-label">Total Invertido</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-value" id="ahorro-fiscal">$0</div>
-                                <div class="metric-label">Ahorro Fiscal</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-value" id="costo-real">$0</div>
-                                <div class="metric-label">Costo Real</div>
-                            </div>
+                <div class="card financial-analysis">
+                    <h4>
+                        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.500 4h11l3.500 5.500L12 21 3 9.500 6.500 4Z"/><path d="M3 9.500h18"/><path d="m9 4-2 5.500L12 21l5-11.500L15 4"/></svg>
+                        Análisis Financiero de tu Inversión
+                    </h4>
+                    <div class="financial-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value" id="total-invertido">$0</div>
+                            <div class="metric-label">Total Invertido</div>
                         </div>
-                        
-                        <div class="roi-highlight">
-                            <div class="roi-title">✅ Rendimiento Fiscal</div>
-                            <div class="roi-value" id="rendimiento-fiscal">0%</div>
-                            <div class="roi-description">Por cada peso invertido, obtienes este retorno fiscal</div>
+                        <div class="metric-card">
+                            <div class="metric-value" id="ahorro-fiscal">$0</div>
+                            <div class="metric-label">Ahorro Fiscal</div>
                         </div>
-                        
-                        <div class="nota-calculo" id="nota-calculo">
-                            Inversión: $0 - Ahorro: $0 = Costo Real: $0
+                        <div class="metric-card">
+                            <div class="metric-value" id="costo-real">$0</div>
+                            <div class="metric-label">Costo Real</div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </main>
 
-        <footer class="footer">
-            <p>Ahora Seguros - Rodrigo De la Mora Elizondo</p>
-            <a href="https://rebrand.ly/Ahorra-para-tu-Retiro" target="_blank" class="btn-whatsapp">
-                📱 Solicitar Consulta
+                    <div class="roi-highlight">
+                        <div>
+                            <div class="roi-title">
+                                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.200 2.800 2.800L16.200 9.500"/></svg>
+                                Rendimiento Fiscal
+                            </div>
+                            <div class="roi-description">Por cada peso invertido, obtienes este retorno fiscal</div>
+                        </div>
+                        <div class="roi-value" id="rendimiento-fiscal">0%</div>
+                    </div>
+
+                    <div class="nota-calculo" id="nota-calculo">
+                        Inversión: $0 - Ahorro: $0 = Costo Real: $0
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <img src="logo-ahora.gif" alt="Ahora Seguros">
+                <div class="footer-name">Ahora Seguros · Rodrigo De la Mora Elizondo</div>
+                <p class="footer-legal">El cálculo es una estimación informativa conforme a las tarifas de ISR y el valor de la UMA vigentes en 2026 (Art. 151 y 185 LISR). No constituye asesoría fiscal ni garantiza resultados.</p>
+            </div>
+            <a href="https://rebrand.ly/Ahorra-para-tu-Retiro" target="_blank" rel="noopener" class="btn-primary">
+                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                Solicitar Consulta
             </a>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
     <script>
         // Tablas ISR 2026 Oficiales (SAT - El Contribuyente)
@@ -788,10 +728,7 @@
                 if (ingresoAnual >= tramo.min && ingresoAnual <= tramo.max) {
                     const excedente = ingresoAnual - tramo.min;
                     const impuesto = tramo.cuotaFija + (excedente * tramo.porcentaje / 100);
-                    return {
-                        isr: Math.round(impuesto),
-                        tasa: tramo.porcentaje
-                    };
+                    return { isr: Math.round(impuesto), tasa: tramo.porcentaje };
                 }
             }
             return { isr: 0, tasa: 0 };
@@ -802,10 +739,7 @@
                 if (salarioMensual >= tramo.min && salarioMensual <= tramo.max) {
                     const excedente = salarioMensual - tramo.min;
                     const impuesto = tramo.cuotaFija + (excedente * tramo.porcentaje / 100);
-                    return {
-                        isr: Math.round(impuesto),
-                        tasa: tramo.porcentaje
-                    };
+                    return { isr: Math.round(impuesto), tasa: tramo.porcentaje };
                 }
             }
             return { isr: 0, tasa: 0 };
@@ -813,7 +747,6 @@
 
         function calcularLimites(ingresoAnual) {
             const cincoUMAs = UMA_2026.anual * 5; // $213,973.20
-            
             return {
                 gastosPersonales: Math.min(ingresoAnual * 0.15, cincoUMAs),
                 ppr: Math.min(ingresoAnual * 0.10, cincoUMAs),
@@ -830,15 +763,23 @@
             }).format(cantidad);
         }
 
+        const $ = (id) => document.getElementById(id);
         let datosBase = null;
 
-        document.getElementById('calcular-btn').addEventListener('click', function() {
-            const salarioMensual = parseFloat(document.getElementById('salario-mensual').value);
-            
+        function mostrarError(msg) {
+            const el = $('salario-error');
+            el.textContent = msg || '';
+            el.classList.toggle('hidden', !msg);
+        }
+
+        function calcularBase() {
+            const salarioMensual = parseFloat($('salario-mensual').value);
+
             if (!salarioMensual || salarioMensual <= 0) {
-                alert('Por favor ingresa un salario válido');
+                mostrarError('Por favor ingresa un salario válido');
                 return;
             }
+            mostrarError('');
 
             const ingresoAnual = salarioMensual * 12;
             const resultado = calcularISRAnual(ingresoAnual);
@@ -847,32 +788,28 @@
             const mesesSAT = (resultado.isr / salarioMensual).toFixed(1);
             const limites = calcularLimites(ingresoAnual);
 
-            // Actualizar límites dinámicos en la interfaz
-            document.getElementById('gastos-personales').setAttribute('max', Math.round(limites.gastosPersonales));
-            document.getElementById('ppr').setAttribute('max', Math.round(limites.ppr));
+            // Límites dinámicos en la interfaz
+            $('gastos-personales').setAttribute('max', Math.round(limites.gastosPersonales));
+            $('ppr').setAttribute('max', Math.round(limites.ppr));
+            $('cuenta-especial').setAttribute('max', Math.round(limites.cuentaEspecial));
 
-            // Actualizar los textos de límites en la interfaz
-            document.querySelector('label[for="gastos-personales"] + .limite').textContent = 
+            document.querySelector('label[for="gastos-personales"]').closest('.estimulo-item').querySelector('.limite').textContent =
                 `(Límite: ${formatearMoneda(limites.gastosPersonales)})`;
-            document.querySelector('label[for="ppr"] + .limite').textContent = 
+            document.querySelector('label[for="ppr"]').closest('.estimulo-item').querySelector('.limite').textContent =
                 `(Límite: ${formatearMoneda(limites.ppr)})`;
-            document.querySelector('label[for="cuenta-especial"] + .limite').textContent = 
+            document.querySelector('label[for="cuenta-especial"]').closest('.estimulo-item').querySelector('.limite').textContent =
                 `(Límite: ${formatearMoneda(limites.cuentaEspecial)})`;
 
-            // Mostrar resultados
-            document.getElementById('ingreso-anual').textContent = formatearMoneda(ingresoAnual);
-            document.getElementById('isr-anual').textContent = formatearMoneda(resultado.isr);
-            document.getElementById('tasa-anual').textContent = `Tasa: ${resultado.tasa}%`;
-            document.getElementById('isr-mensual').textContent = formatearMoneda(isrMensual);
-            document.getElementById('meses-sat').textContent = `${mesesSAT} meses`;
+            $('ingreso-anual').textContent = formatearMoneda(ingresoAnual);
+            $('isr-anual').textContent = formatearMoneda(resultado.isr);
+            $('tasa-anual').textContent = `Tasa: ${resultado.tasa}%`;
+            $('isr-mensual').textContent = formatearMoneda(isrMensual);
+            $('meses-sat').textContent = `${mesesSAT} meses`;
 
-            // Mostrar leyenda impactante
-            document.getElementById('meses-sat-text').textContent = `${mesesSAT} meses`;
-            document.getElementById('sat-warning-message').classList.remove('hidden');
+            $('meses-sat-text').textContent = `${mesesSAT} meses`;
+            $('sat-warning-message').classList.remove('hidden');
+            $('results-section').classList.remove('hidden');
 
-            document.getElementById('results-section').classList.remove('hidden');
-
-            // Guardar datos para comparación
             datosBase = {
                 salarioMensual,
                 ingresoAnual,
@@ -881,23 +818,26 @@
                 limites
             };
 
-            console.log('Datos base guardados:', datosBase); // Debug
-        });
+            // Si la comparación ya es visible, se actualiza con los nuevos datos
+            if (!$('comparison-section').classList.contains('hidden')) {
+                calcularConDeducciones();
+            }
+        }
 
-        document.getElementById('calcular-deducciones-btn').addEventListener('click', function() {
+        function calcularConDeducciones() {
             if (!datosBase) {
-                alert('Primero calcula tus impuestos básicos');
+                mostrarError('Primero calcula tus impuestos básicos');
                 return;
             }
 
-            const gastosPersonales = parseFloat(document.getElementById('gastos-personales').value) || 0;
-            const ppr = parseFloat(document.getElementById('ppr').value) || 0;
-            const cuentaEspecial = parseFloat(document.getElementById('cuenta-especial').value) || 0;
+            const gastosPersonales = parseFloat($('gastos-personales').value) || 0;
+            const ppr = parseFloat($('ppr').value) || 0;
+            const cuentaEspecial = parseFloat($('cuenta-especial').value) || 0;
 
             // Aplicar límites según LISR
-            const gastosLimitados = Math.min(gastosPersonales, datosBase.limites.gastosPersonales);
-            const pprLimitado = Math.min(ppr, datosBase.limites.ppr);
-            const cuentaLimitada = Math.min(cuentaEspecial, datosBase.limites.cuentaEspecial);
+            const gastosLimitados = Math.min(Math.max(gastosPersonales, 0), datosBase.limites.gastosPersonales);
+            const pprLimitado = Math.min(Math.max(ppr, 0), datosBase.limites.ppr);
+            const cuentaLimitada = Math.min(Math.max(cuentaEspecial, 0), datosBase.limites.cuentaEspecial);
 
             const totalDeducciones = gastosLimitados + pprLimitado + cuentaLimitada;
             const ingresoGravable = Math.max(0, datosBase.ingresoAnual - totalDeducciones);
@@ -906,12 +846,12 @@
             const ahorro = datosBase.isrAnual - resultadoConDeducciones.isr;
             const porcentajeAhorro = datosBase.isrAnual > 0 ? (ahorro / datosBase.isrAnual * 100).toFixed(1) : 0;
 
-            // Calcular análisis financiero
+            // Análisis financiero
             const totalInvertido = pprLimitado + cuentaLimitada;
             const costoReal = totalInvertido - ahorro;
             const rendimientoFiscal = totalInvertido > 0 ? (ahorro / totalInvertido * 100).toFixed(1) : 0;
 
-            // Calcular tiempo recuperado
+            // Tiempo recuperado
             const diasRecuperados = Math.round((ahorro / datosBase.salarioMensual) * 30);
             let tiempoRecuperado;
             if (diasRecuperados >= 30) {
@@ -924,35 +864,63 @@
                 tiempoRecuperado = `${diasRecuperados} día${diasRecuperados > 1 ? 's' : ''}`;
             }
 
-            // Debug - mostrar valores calculados
-            console.log('=== DEBUG CÁLCULOS ===');
-            console.log('Ingreso anual:', datosBase.ingresoAnual);
-            console.log('Total deducciones:', totalDeducciones);
-            console.log('Ingreso gravable:', ingresoGravable);
-            console.log('ISR sin deducciones:', datosBase.isrAnual);
-            console.log('ISR con deducciones:', resultadoConDeducciones.isr);
-            console.log('Ahorro:', ahorro);
+            $('isr-sin-ded').textContent = formatearMoneda(datosBase.isrAnual);
+            $('tasa-sin-ded').textContent = `Tasa: ${datosBase.tasaAnual}%`;
+            $('isr-con-ded').textContent = formatearMoneda(resultadoConDeducciones.isr);
+            $('tasa-con-ded').textContent = `Tasa: ${resultadoConDeducciones.tasa}%`;
+            $('ahorro-total').textContent = formatearMoneda(ahorro);
+            $('ahorro-porcentaje').textContent = `${porcentajeAhorro}% menos`;
+            $('tiempo-recuperado').textContent = tiempoRecuperado;
 
-            // Mostrar comparación - VALORES CORREGIDOS
-            document.getElementById('isr-sin-ded').textContent = formatearMoneda(datosBase.isrAnual);
-            document.getElementById('tasa-sin-ded').textContent = `Tasa: ${datosBase.tasaAnual}%`;
-            document.getElementById('isr-con-ded').textContent = formatearMoneda(resultadoConDeducciones.isr);
-            document.getElementById('tasa-con-ded').textContent = `Tasa: ${resultadoConDeducciones.tasa}%`;
-            document.getElementById('ahorro-total').textContent = formatearMoneda(ahorro);
-            document.getElementById('ahorro-porcentaje').textContent = `${porcentajeAhorro}% menos`;
-            document.getElementById('tiempo-recuperado').textContent = tiempoRecuperado;
-
-            // Mostrar análisis financiero
-            document.getElementById('total-invertido').textContent = formatearMoneda(totalInvertido);
-            document.getElementById('ahorro-fiscal').textContent = formatearMoneda(ahorro);
-            document.getElementById('costo-real').textContent = formatearMoneda(costoReal);
-            document.getElementById('rendimiento-fiscal').textContent = `${rendimientoFiscal}%`;
-            document.getElementById('nota-calculo').textContent = 
+            $('total-invertido').textContent = formatearMoneda(totalInvertido);
+            $('ahorro-fiscal').textContent = formatearMoneda(ahorro);
+            $('costo-real').textContent = formatearMoneda(costoReal);
+            $('rendimiento-fiscal').textContent = `${rendimientoFiscal}%`;
+            $('nota-calculo').textContent =
                 `Inversión: ${formatearMoneda(totalInvertido)} - Ahorro: ${formatearMoneda(ahorro)} = Costo Real: ${formatearMoneda(costoReal)}`;
 
-            document.getElementById('comparison-section').classList.remove('hidden');
+            const seccion = $('comparison-section');
+            seccion.classList.remove('hidden');
+            seccion.classList.remove('fade-update');
+            void seccion.offsetWidth; // reinicia la animación suave
+            seccion.classList.add('fade-update');
+        }
+
+        $('calcular-btn').addEventListener('click', calcularBase);
+        $('calcular-deducciones-btn').addEventListener('click', function() {
+            calcularConDeducciones();
+            const sec = $('comparison-section');
+            if (!sec.classList.contains('hidden')) {
+                sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+
+        // Enter en los campos numéricos
+        $('salario-mensual').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); calcularBase(); }
+        });
+        ['gastos-personales', 'ppr', 'cuenta-especial'].forEach((id) => {
+            $(id).addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); calcularConDeducciones(); }
+            });
+            // Actualización suave si la comparación ya está visible
+            let t;
+            $(id).addEventListener('input', () => {
+                if ($('comparison-section').classList.contains('hidden')) return;
+                clearTimeout(t);
+                t = setTimeout(calcularConDeducciones, 300);
+            });
+        });
+
+        // Botones "Usar tope máximo"
+        document.querySelectorAll('.pill[data-tope]').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                if (!datosBase) { calcularBase(); }
+                if (!datosBase) return;
+                $(btn.dataset.input).value = Math.floor(datosBase.limites[btn.dataset.tope]);
+                calcularConDeducciones();
+            });
         });
     </script>
 </body>
 </html>
-

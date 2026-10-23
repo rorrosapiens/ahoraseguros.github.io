@@ -495,33 +495,35 @@
         .footer-legal { font-size: 0.76rem; color: var(--nota); line-height: 1.5; }
 
         /* ===== Agregar a pantalla de inicio ===== */
-        .install-invite {
-            background: #fff;
-            border: 1px solid #d9e2f8;
-            border-radius: 16px;
-            box-shadow: var(--sombra);
-            padding: 18px 20px;
-        }
-        .install-invite-inner {
-            display: flex;
+        .install-fab {
+            position: fixed;
+            right: 16px;
+            bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+            z-index: 35;
+            display: inline-flex;
             align-items: center;
-            gap: 16px;
+            gap: 8px;
+            margin: 0;
+            padding: 7px 14px 7px 7px;
+            border: 1.5px solid #204895;
+            border-radius: 999px;
+            background: #fff;
+            color: #1b3668;
+            box-shadow: 0 8px 22px rgba(27, 54, 104, 0.18);
+            font: 700 0.92rem 'Manrope', 'ManropeLocal', sans-serif;
+            line-height: 1;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
-        .install-invite img {
-            width: 64px;
-            height: 64px;
-            border-radius: 14px;
+        .install-fab img {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
             flex: none;
             object-fit: cover;
         }
-        .install-invite-copy { min-width: 0; flex: 1; }
-        .install-invite-copy p {
-            font-weight: 700;
-            font-size: 1.02rem;
-            line-height: 1.35;
-            margin-bottom: 12px;
-            color: var(--tinta);
-        }
+        .install-fab:hover { background: #f4f7fc; }
+        .install-fab:focus-visible { outline: 3px solid rgba(32, 72, 149, 0.45); outline-offset: 2px; }
         .install-modal {
             position: fixed;
             inset: 0;
@@ -635,9 +637,10 @@
             .roi-highlight { flex-direction: column; align-items: flex-start; }
             .cochinito { height: 88px; }
             .footer-inner .btn-primary { width: 100%; }
-            .install-invite-inner { align-items: flex-start; }
-            .install-invite .btn-primary { width: 100%; }
             .install-modal { align-items: flex-end; padding: 10px; }
+        }
+        @media (max-width: 1024px) {
+            .footer { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
         }
     </style>
 </head>
@@ -860,16 +863,6 @@
                     <div class="nota-calculo" id="nota-calculo">
                         Inversión: $0 - Ahorro: $0 = Costo Real: $0
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="install-invite" class="install-invite hidden" hidden>
-            <div class="install-invite-inner">
-                <img src="apple-touch-icon.png" alt="Ícono de la app Ahora Seguros" width="64" height="64">
-                <div class="install-invite-copy">
-                    <p>Guarda esta calculadora como App en tu celular o iPad</p>
-                    <button type="button" id="install-btn" class="btn-primary">📲 Agregar a pantalla de inicio</button>
                 </div>
             </div>
         </section>
@@ -1128,6 +1121,11 @@
         });
     </script>
 
+    <button type="button" id="install-btn" class="install-fab hidden" hidden>
+        <img src="apple-touch-icon.png" alt="" width="26" height="26">
+        Instalar como App
+    </button>
+
     <div id="install-modal" class="install-modal hidden" hidden role="dialog" aria-modal="true" aria-labelledby="install-modal-title">
         <div class="install-modal-card">
             <button type="button" class="install-close" aria-label="Cerrar">×</button>
@@ -1172,11 +1170,10 @@
 
     <script>
         (function () {
-            const invite = document.getElementById('install-invite');
+            const boton = document.getElementById('install-btn');
             const modal = document.getElementById('install-modal');
             const stepsIos = document.getElementById('install-steps-ios');
             const stepsAndroid = document.getElementById('install-steps-android');
-            const installBtn = document.getElementById('install-btn');
             let deferredPrompt = null;
             let ultimoFoco = null;
 
@@ -1193,19 +1190,22 @@
             }
 
             function esNavegadorMovilOTablet() {
-                return esIosOIpados() || esAndroid();
+                const ua = navigator.userAgent || '';
+                const porAgente = /iPhone|iPod|iPad|Android/i.test(ua);
+                const iPadOS = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+                const tactil = window.matchMedia('(pointer: coarse)').matches
+                    || (navigator.maxTouchPoints > 0 && window.innerWidth <= 1024);
+                return porAgente || iPadOS || tactil;
             }
 
             function abiertaComoApp() {
-                return window.matchMedia('(display-mode: standalone)').matches || !!window.navigator.standalone;
+                return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
             }
 
             function mostrarInvitacion() {
-                const visible = esNavegadorMovilOTablet()
-                    && !window.matchMedia('(display-mode: standalone)').matches
-                    && !window.navigator.standalone;
-                invite.hidden = !visible;
-                invite.classList.toggle('hidden', !visible);
+                const visible = esNavegadorMovilOTablet() && !abiertaComoApp();
+                boton.hidden = !visible;
+                boton.classList.toggle('hidden', !visible);
             }
 
             function abrirGuia(tipo) {
@@ -1234,13 +1234,13 @@
 
             window.addEventListener('appinstalled', () => {
                 deferredPrompt = null;
-                invite.hidden = true;
-                invite.classList.add('hidden');
+                boton.hidden = true;
+                boton.classList.add('hidden');
                 cerrarGuia();
             });
 
-            installBtn.addEventListener('click', async () => {
-                if (esIosOIpados()) {
+            boton.addEventListener('click', async () => {
+                if (!esAndroid()) {
                     abrirGuia('ios');
                     return;
                 }
@@ -1251,8 +1251,8 @@
                         await promptEvent.prompt();
                         const choice = await promptEvent.userChoice;
                         if (choice && choice.outcome === 'accepted') {
-                            invite.hidden = true;
-                            invite.classList.add('hidden');
+                            boton.hidden = true;
+                            boton.classList.add('hidden');
                         }
                     } catch (err) {
                         abrirGuia('android');
@@ -1272,6 +1272,7 @@
             });
 
             mostrarInvitacion();
+            window.addEventListener('resize', mostrarInvitacion);
 
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('./sw.js').catch(() => {});

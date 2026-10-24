@@ -151,6 +151,17 @@
             color: #0F1124;
             margin: 2px 2px -2px;
         }
+        .nota-privacidad {
+            margin: 0;
+            padding: 11px 14px;
+            border-radius: 12px;
+            background: #eef3ff;
+            border: 1px solid #d5e2fb;
+            color: var(--marino);
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.45;
+        }
 
         /* ===== Layout ===== */
         .wrap {
@@ -647,6 +658,7 @@
             .hero h1 { font-size: clamp(1.12rem, 4.5vw, 1.35rem); margin-bottom: 7px; }
             .hero .sub { font-size: 0.88rem; line-height: 1.45; }
             .whatsapp { font-size: 0.9rem; margin-top: 7px; }
+            .nota-privacidad { font-size: 0.84rem; padding: 10px 12px; }
             .btn-primary.full-m { width: 100%; }
             .results-grid, .comparison-grid { gap: 10px; }
             .result-card, .comparison-card { padding: 14px; }
@@ -680,13 +692,14 @@
 
     <main class="wrap">
         <p class="pasos-intro">Sigue los siguientes pasos para calcular tu pago de impuestos</p>
+        <p class="nota-privacidad">Tus datos son totalmente confidenciales: no se guardan. El resultado es solo una estimación y no sustituye un cálculo fiscal definitivo.</p>
         <section class="card input-card">
             <div class="sec"><b>1</b>Tu ingreso</div>
             <h2>Ingresa tu Salario Mensual</h2>
             <div class="input-row">
                 <div class="salary-field">
                     <span class="currency-symbol">$</span>
-                    <input type="number" id="salario-mensual" class="salary-input" placeholder="50,000" min="1" step="1000" inputmode="numeric" pattern="[0-9]*" aria-label="Salario mensual en pesos mexicanos">
+                    <input type="text" id="salario-mensual" class="salary-input" placeholder="50,000" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-label="Salario mensual en pesos mexicanos">
                     <span class="currency-label">MXN mensuales</span>
                 </div>
                 <button id="calcular-btn" class="btn-primary full-m">Calcular Impuestos</button>
@@ -753,7 +766,7 @@
                                 </button>
                             </div>
                             <div class="limite">(Límite: $45,000)</div>
-                            <input type="number" id="gastos-personales" placeholder="0" min="0" max="45000" inputmode="numeric" pattern="[0-9]*">
+                            <input type="text" id="gastos-personales" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto>
                         </div>
                     </div>
 
@@ -779,7 +792,7 @@
                                 </button>
                             </div>
                             <div class="limite">(Límite: $30,000)</div>
-                            <input type="number" id="ppr" placeholder="0" min="0" max="30000" inputmode="numeric" pattern="[0-9]*">
+                            <input type="text" id="ppr" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto>
                         </div>
                     </div>
 
@@ -801,7 +814,7 @@
                                 </button>
                             </div>
                             <div class="limite">(Límite: $152,000)</div>
-                            <input type="number" id="cuenta-especial" placeholder="0" min="0" max="152000" inputmode="numeric" pattern="[0-9]*">
+                            <input type="text" id="cuenta-especial" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto>
                         </div>
                     </div>
                 </div>
@@ -979,6 +992,70 @@
             }).format(cantidad);
         }
 
+        // El usuario escribe dígitos. Las comas de miles se aplican al salir del campo.
+        function parseMonto(valor) {
+            if (valor == null) return NaN;
+            const original = String(valor).trim();
+            if (!original) return NaN;
+            const negativo = /^-/.test(original.replace(/\s/g, ''));
+            let s = original.replace(/\s/g, '').replace(/\$/g, '').replace(/mxn/ig, '');
+            s = s.replace(/[^\d.,]/g, '').replace(/[.,]+$/g, '');
+            if (!s || !/\d/.test(s)) return NaN;
+
+            const tieneComa = s.includes(',');
+            const tienePunto = s.includes('.');
+            if (tieneComa && tienePunto) {
+                if (s.lastIndexOf(',') > s.lastIndexOf('.')) {
+                    s = s.replace(/\./g, '').replace(',', '.');
+                } else {
+                    s = s.replace(/,/g, '');
+                }
+            } else if (tieneComa || tienePunto) {
+                const partes = s.split(tieneComa ? ',' : '.');
+                const cola = partes[partes.length - 1];
+                const esMiles = partes.length > 1
+                    && partes.slice(1).every((p) => p.length === 3)
+                    && partes[0].length >= 1;
+                if (esMiles) {
+                    s = partes.join('');
+                } else if (cola.length >= 1 && cola.length <= 2 && partes.slice(1, -1).every((p) => p.length === 3)) {
+                    s = partes.slice(0, -1).join('') + '.' + cola;
+                } else if (partes.length === 2) {
+                    s = partes[0] + '.' + cola;
+                } else {
+                    s = partes.join('');
+                }
+            }
+
+            if (!/^\d+(\.\d+)?$/.test(s)) return NaN;
+            const n = Number(s);
+            if (!Number.isFinite(n)) return NaN;
+            return negativo ? -n : n;
+        }
+
+        function formatearMonto(cantidad) {
+            if (!Number.isFinite(cantidad)) return '';
+            const negativo = cantidad < 0;
+            const [entero, dec] = (Math.round(Math.abs(cantidad) * 100) / 100).toFixed(2).split('.');
+            const conMiles = entero.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            const texto = dec === '00' ? conMiles : `${conMiles}.${dec}`;
+            return negativo ? `-${texto}` : texto;
+        }
+
+        function normalizarCampoMonto(el, forzar) {
+            if (!el) return;
+            if (!forzar && document.activeElement === el) return;
+            const texto = el.value.trim();
+            if (!texto) {
+                if (el.value) el.value = '';
+                return;
+            }
+            const n = parseMonto(texto);
+            if (!Number.isFinite(n)) return;
+            const formateado = formatearMonto(n);
+            if (el.value !== formateado) el.value = formateado;
+        }
+
         const $ = (id) => document.getElementById(id);
         let datosBase = null;
 
@@ -989,7 +1066,9 @@
         }
 
         function calcularBase() {
-            const salarioMensual = parseFloat($('salario-mensual').value);
+            const campoSalario = $('salario-mensual');
+            normalizarCampoMonto(campoSalario, true);
+            const salarioMensual = parseMonto(campoSalario.value);
 
             if (!salarioMensual || salarioMensual <= 0) {
                 mostrarError('Por favor ingresa un salario válido');
@@ -1003,11 +1082,6 @@
             const isrMensual = resultadoMensual.isr;
             const mesesSAT = (resultado.isr / salarioMensual).toFixed(1);
             const limites = calcularLimites(ingresoAnual);
-
-            // Límites dinámicos en la interfaz
-            $('gastos-personales').setAttribute('max', Math.round(limites.gastosPersonales));
-            $('ppr').setAttribute('max', Math.round(limites.ppr));
-            $('cuenta-especial').setAttribute('max', Math.round(limites.cuentaEspecial));
 
             document.querySelector('label[for="gastos-personales"]').closest('.estimulo-item').querySelector('.limite').textContent =
                 `(Límite: ${formatearMoneda(limites.gastosPersonales)})`;
@@ -1046,9 +1120,11 @@
                 return;
             }
 
-            const gastosPersonales = parseFloat($('gastos-personales').value) || 0;
-            const ppr = parseFloat($('ppr').value) || 0;
-            const cuentaEspecial = parseFloat($('cuenta-especial').value) || 0;
+            ['gastos-personales', 'ppr', 'cuenta-especial'].forEach((id) => normalizarCampoMonto($(id), false));
+
+            const gastosPersonales = parseMonto($('gastos-personales').value) || 0;
+            const ppr = parseMonto($('ppr').value) || 0;
+            const cuentaEspecial = parseMonto($('cuenta-especial').value) || 0;
 
             // Aplicar límites según LISR
             const gastosLimitados = Math.min(Math.max(gastosPersonales, 0), datosBase.limites.gastosPersonales);
@@ -1111,13 +1187,21 @@
             }
         });
 
-        // Enter en los campos numéricos
+        document.querySelectorAll('[data-monto]').forEach((input) => {
+            input.addEventListener('blur', () => normalizarCampoMonto(input, true));
+        });
+
+        // Enter en los campos de monto
         $('salario-mensual').addEventListener('keydown', (e) => {
             if (e.key === 'Enter') { e.preventDefault(); calcularBase(); }
         });
         ['gastos-personales', 'ppr', 'cuenta-especial'].forEach((id) => {
             $(id).addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') { e.preventDefault(); calcularConDeducciones(); }
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    normalizarCampoMonto($(id), true);
+                    calcularConDeducciones();
+                }
             });
             // Actualización suave si la comparación ya está visible
             let t;
@@ -1133,7 +1217,7 @@
             btn.addEventListener('click', () => {
                 if (!datosBase) { calcularBase(); }
                 if (!datosBase) return;
-                $(btn.dataset.input).value = Math.floor(datosBase.limites[btn.dataset.tope]);
+                $(btn.dataset.input).value = formatearMonto(Math.floor(datosBase.limites[btn.dataset.tope]));
                 calcularConDeducciones();
             });
         });

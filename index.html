@@ -81,6 +81,7 @@
         }
 
         .hidden { display: none !important; }
+        [hidden] { display: none !important; }
 
         /* ===== Hero ===== */
         .hero { background: #FFFFFF; border-bottom: 1px solid #E5E7EB; }
@@ -308,7 +309,7 @@
         .estimulos-head p { color: var(--tinta-2); font-size: 0.92rem; margin-top: 4px; margin-bottom: 20px; }
         .estimulos-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 18px;
             align-items: stretch;
         }
@@ -396,8 +397,9 @@
             transition: border-color .2s, box-shadow .2s;
         }
         .deduccion-bloque input:focus { outline: none; }
+        .deduccion-bloque input::placeholder { color: #C3C9D6; font-weight: 600; }
 
-        .tono-ambar { border-color: #f59e0b; border-top-width: 4px; }
+        .tono-ambar { border-color: #f59e0b; border-top-width: 4px; grid-column: 1 / -1; }
         .tono-ambar .mark { background: #fef3c7; color: #b45309; }
         .tono-ambar h4,
         .tono-ambar .art,
@@ -405,6 +407,224 @@
         .tono-ambar .pill { background: #fef3c7; color: #b45309; border: 1px solid #f59e0b; }
         .tono-ambar .pill:hover { background: #fde68a; }
         .tono-ambar input:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); }
+        .tono-ambar input[readonly] {
+            background: #fffbeb;
+            color: #92400e;
+            border-color: #fcd34d;
+            cursor: default;
+        }
+        .tono-ambar input[readonly]:focus { border-color: #fcd34d; box-shadow: none; }
+        .pill:disabled { opacity: 0.48; cursor: not-allowed; }
+        .tono-ambar .pill:disabled:hover { background: #fef3c7; }
+
+        .suma-nota {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 6px 0 0;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #b45309;
+            line-height: 1.35;
+        }
+        .suma-nota .ico { width: 14px; height: 14px; }
+
+        .desglose-toggle {
+            margin-top: 12px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #f59e0b;
+            background: #fffbeb;
+            color: #b45309;
+            font: 700 0.9rem 'Manrope', 'ManropeLocal', sans-serif;
+            cursor: pointer;
+            text-align: left;
+        }
+        .desglose-toggle:hover { background: #fef3c7; }
+        .desglose-toggle:focus-visible,
+        .btn-agregar:focus-visible,
+        .colegiatura-quitar:focus-visible { outline: 3px solid rgba(245, 158, 11, 0.45); outline-offset: 2px; }
+        .desglose-toggle .chevron { width: 16px; height: 16px; transition: transform .18s ease; }
+        .desglose-toggle[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+
+        .desglose-panel {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            min-width: 0;
+            background: #fffdf8;
+            border: 1px solid #fde68a;
+            border-radius: 12px;
+            padding: 12px;
+        }
+        .gasto-campo { min-width: 0; }
+        .gasto-campo label,
+        .colegiatura-nivel label,
+        .colegiatura-monto label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.86rem;
+            line-height: 1.35;
+            color: var(--tinta);
+            margin: 0 0 2px;
+        }
+        .estimulo-item p.gasto-ayuda {
+            font-size: 0.78rem;
+            line-height: 1.35;
+            color: var(--nota);
+            font-weight: 600;
+            margin: 0 0 6px;
+        }
+        .gasto-aviso {
+            margin: 4px 0 0;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #9a3412;
+            line-height: 1.35;
+        }
+
+        .colegiaturas-bloque {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px dashed #f59e0b;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        .colegiaturas-bloque h5 {
+            font-family: 'Montserrat', 'MontserratLocal', 'Manrope', 'ManropeLocal', sans-serif;
+            font-size: 1.02rem;
+            font-weight: 600;
+            color: #b45309;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            line-height: 1.25;
+        }
+        .colegiaturas-aparte {
+            align-self: flex-start;
+            margin: 8px 0 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #fffbeb;
+            border: 1px solid #f59e0b;
+            color: #b45309;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            line-height: 1.35;
+        }
+        .estimulo-item .art a { color: #1d4ed8; font-weight: 700; }
+        .colegiaturas-lista { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+        .colegiaturas-lista:empty { display: none; }
+        .colegiatura-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 12px;
+            align-items: flex-end;
+            min-width: 0;
+            background: #fff;
+            border: 1px solid #fde68a;
+            border-radius: 12px;
+            padding: 10px;
+        }
+        .colegiatura-nivel { flex: 1 1 220px; min-width: 0; }
+        .colegiatura-select-line {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+        .deduccion-bloque select {
+            flex: 1 1 9.5rem;
+            width: auto;
+            max-width: 100%;
+            min-width: 0;
+            padding: 11px 12px;
+            border: 1.5px solid var(--borde);
+            border-radius: 10px;
+            font: 700 1rem 'Manrope', 'ManropeLocal', sans-serif;
+            color: var(--tinta);
+            background: #fff;
+        }
+        .tono-ambar select:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+        }
+        .colegiatura-tope {
+            flex: none;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #b45309;
+            line-height: 1.3;
+        }
+        .colegiatura-monto-line {
+            flex: 1 1 200px;
+            min-width: 0;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+        }
+        .colegiatura-monto { flex: 1 1 auto; min-width: 0; }
+        .colegiatura-monto-line input { width: 100%; }
+        .colegiatura-row .gasto-aviso { flex: 1 0 100%; }
+        .colegiatura-quitar {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            flex: none;
+            padding: 11px 12px;
+            border-radius: 10px;
+            border: 1px solid #f59e0b;
+            background: #fff;
+            color: #b45309;
+            font: 700 0.82rem 'Manrope', 'ManropeLocal', sans-serif;
+            cursor: pointer;
+        }
+        .colegiatura-quitar .ico { width: 16px; height: 16px; }
+        .colegiatura-quitar:hover,
+        .btn-agregar:hover { background: #fffbeb; }
+        .btn-agregar {
+            margin-top: 10px;
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px dashed #d97706;
+            background: #fff;
+            color: #b45309;
+            font: 700 0.9rem 'Manrope', 'ManropeLocal', sans-serif;
+            cursor: pointer;
+        }
+
+        @media (min-width: 800px) {
+            .desglose-panel {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 14px 18px;
+            }
+            .tono-ambar .ded-head,
+            .tono-ambar .deduccion-bloque > .limite,
+            #gastos-personales,
+            #gastos-suma-nota {
+                max-width: 520px;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .desglose-toggle .chevron { transition: none; }
+        }
 
         .tono-verde { border-color: #16a34a; border-top-width: 4px; }
         .tono-verde .mark { background: #dcfce7; color: #15803d; }
@@ -456,6 +676,13 @@
         .comparison-card .amount { color: var(--tinta); }
         .comparison-card.time-card { background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 1.5px solid #2563eb; }
         .comparison-card.time-card h4, .comparison-card.time-card h4 .ico, .comparison-card.time-card .amount { color: #1d4ed8; }
+        .deducciones-resumen {
+            margin: -4px 0 16px;
+            color: var(--tinta-2);
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.45;
+        }
 
         .card.financial-analysis {
             background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
@@ -755,8 +982,8 @@
                         </h4>
                         <div class="estimulo-copy">
                             <p><strong>Límite:</strong> 15% del ingreso anual (5 UMAs Anuales = $213,973)</p>
-                            <p><strong>Incluye:</strong> Gastos médicos, dentales, funerarios, donativos, intereses hipotecarios, colegiaturas</p>
-                            <p class="art">Art. 151 Fracción VI LISR</p>
+                            <p><strong>Incluye:</strong> Gastos médicos, dentales, primas de seguro, funerarios, donativos, intereses hipotecarios y transporte escolar</p>
+                            <p class="art">Art. 151 LISR</p>
                         </div>
                         <div class="deduccion-bloque">
                             <div class="ded-head">
@@ -767,6 +994,64 @@
                             </div>
                             <div class="limite">(Límite: $45,000)</div>
                             <input type="text" id="gastos-personales" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto>
+                            <p id="gastos-suma-nota" class="suma-nota hidden" hidden>
+                                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                                Suma de tu desglose
+                            </p>
+                            <button type="button" class="desglose-toggle" id="desglose-toggle" aria-expanded="false" aria-controls="desglose-panel">
+                                <span>Desglosar mis gastos</span>
+                                <svg class="ico chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                            </button>
+                            <div id="desglose-panel" class="desglose-panel hidden" hidden role="region" aria-label="Desglose de gastos personales">
+                                <div class="gasto-campo">
+                                    <label for="gasto-medicos">Gastos médicos, dentales y hospitalarios</label>
+                                    <p class="gasto-ayuda" id="ayuda-gasto-medicos">Consultas, cirugías, análisis y optometrista.</p>
+                                    <input type="text" id="gasto-medicos" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-medicos">
+                                    <p class="gasto-aviso hidden" id="aviso-gasto-medicos" hidden></p>
+                                </div>
+                                <div class="gasto-campo">
+                                    <label for="gasto-primas">Primas de seguro de gastos médicos</label>
+                                    <p class="gasto-ayuda" id="ayuda-gasto-primas">Para ti, tu cónyuge, tus hijos o tus padres.</p>
+                                    <input type="text" id="gasto-primas" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-primas">
+                                    <p class="gasto-aviso hidden" id="aviso-gasto-primas" hidden></p>
+                                </div>
+                                <div class="gasto-campo">
+                                    <label for="gasto-hipoteca">Intereses reales de crédito hipotecario</label>
+                                    <p class="gasto-ayuda" id="ayuda-gasto-hipoteca">Solo los intereses reales pagados en el año.</p>
+                                    <input type="text" id="gasto-hipoteca" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-hipoteca">
+                                    <p class="gasto-aviso hidden" id="aviso-gasto-hipoteca" hidden></p>
+                                </div>
+                                <div class="gasto-campo">
+                                    <label for="gasto-donativos">Donativos a instituciones autorizadas</label>
+                                    <p class="gasto-ayuda" id="ayuda-gasto-donativos">Tope: 7% del ingreso anual.</p>
+                                    <input type="text" id="gasto-donativos" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-donativos aviso-gasto-donativos">
+                                    <p class="gasto-aviso hidden" id="aviso-gasto-donativos" hidden></p>
+                                </div>
+                                <div class="gasto-campo">
+                                    <label for="gasto-transporte">Transporte escolar obligatorio</label>
+                                    <p class="gasto-ayuda" id="ayuda-gasto-transporte">Solo cuando es obligatorio para el alumno.</p>
+                                    <input type="text" id="gasto-transporte" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-transporte">
+                                    <p class="gasto-aviso hidden" id="aviso-gasto-transporte" hidden></p>
+                                </div>
+                                <div class="gasto-campo">
+                                    <label for="gasto-funerarios">Gastos funerarios</label>
+                                    <p class="gasto-ayuda" id="ayuda-gasto-funerarios">Tope: 1 UMA anual ($42,794.64).</p>
+                                    <input type="text" id="gasto-funerarios" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-funerarios aviso-gasto-funerarios">
+                                    <p class="gasto-aviso hidden" id="aviso-gasto-funerarios" hidden></p>
+                                </div>
+                            </div>
+                            <div class="colegiaturas-bloque" id="colegiaturas-bloque" aria-labelledby="colegiaturas-titulo">
+                                <h5 id="colegiaturas-titulo">
+                                    <span class="mark" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5.2h6.2A2.3 2.3 0 0 1 12.5 7.5V19a2 2 0 0 0-2.3-1.4H4z"/><path d="M20 5.2h-6.2A2.3 2.3 0 0 0 11.5 7.5V19a2 2 0 0 1 2.3-1.4H20z"/></svg></span>
+                                    Colegiaturas
+                                </h5>
+                                <p class="colegiaturas-aparte">No entra en el tope del 15%</p>
+                                <p class="art">Decreto DOF 26-dic-2013, arts. 1.8–1.10 · <a href="https://www.sat.gob.mx/minisitio/DeduccionesPersonales/colegiaturas.html" target="_blank" rel="noopener">SAT</a></p>
+                                <p class="gasto-ayuda">Solo la colegiatura (no inscripción ni reinscripción) de escuela privada con RVOE. Un renglón por alumno; si cursó dos niveles en el año, elige el de mayor tope.</p>
+                                <div id="colegiaturas-lista" class="colegiaturas-lista"></div>
+                                <button type="button" id="agregar-alumno" class="btn-agregar">+ Agregar alumno</button>
+                                <p id="colegiaturas-suma" class="suma-nota hidden" hidden></p>
+                            </div>
                         </div>
                     </div>
 
@@ -831,6 +1116,7 @@
                         <svg class="ico" style="color:var(--azul)" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M21 20H3"/></svg>
                         Comparación de Escenarios
                     </h3>
+                    <p class="deducciones-resumen" id="deducciones-resumen"></p>
                     <div class="comparison-grid">
                         <div class="comparison-card">
                             <h4>Sin Deducciones</h4>
@@ -904,7 +1190,7 @@
             <div class="footer-brand">
                 <img src="logo-ahora.gif" alt="Ahora Seguros">
                 <div class="footer-name">Ahora Seguros · Rodrigo De la Mora Elizondo</div>
-                <p class="footer-legal">El cálculo es una estimación informativa conforme a las tarifas de ISR y el valor de la UMA vigentes en 2026 (Art. 151 y 185 LISR). No constituye asesoría fiscal ni garantiza resultados.</p>
+                <p class="footer-legal">El cálculo es una estimación informativa conforme a las tarifas de ISR y el valor de la UMA vigentes en 2026 (Art. 151 y 185 LISR y el estímulo de colegiaturas del Decreto DOF 26-dic-2013). No constituye asesoría fiscal ni garantiza resultados.</p>
             </div>
             <a href="https://rebrand.ly/Ahorra-para-tu-Retiro" target="_blank" rel="noopener" class="btn-primary">
                 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
@@ -1059,6 +1345,213 @@
         const $ = (id) => document.getElementById(id);
         let datosBase = null;
 
+        const CONCEPTOS_GASTO = [
+            { id: 'gasto-medicos' },
+            { id: 'gasto-primas' },
+            { id: 'gasto-hipoteca' },
+            { id: 'gasto-donativos', cap: (ingreso) => ingreso * 0.07 },
+            { id: 'gasto-transporte' },
+            { id: 'gasto-funerarios', cap: () => UMA_2026.anual }
+        ];
+
+        const NIVELES_COLEGIATURA = [
+            { value: 'preescolar', label: 'Preescolar', tope: 14200 },
+            { value: 'primaria', label: 'Primaria', tope: 12900 },
+            { value: 'secundaria', label: 'Secundaria', tope: 19900 },
+            { value: 'profesional', label: 'Profesional técnico', tope: 17100 },
+            { value: 'bachillerato', label: 'Bachillerato o equivalente', tope: 24500 }
+        ];
+
+        let alumnoSeq = 0;
+        let gastosBloqueados = false;
+        let recalcTimer = null;
+
+        function ingresoAnualActual() {
+            if (datosBase && datosBase.ingresoAnual > 0) return datosBase.ingresoAnual;
+            const salario = parseMonto($('salario-mensual').value);
+            if (Number.isFinite(salario) && salario > 0) return salario * 12;
+            return 0;
+        }
+
+        function monedaPrecisa(cantidad) {
+            return `$${formatearMonto(cantidad)}`;
+        }
+
+        function leerConcepto(concepto, ingreso) {
+            const el = $(concepto.id);
+            const texto = el ? el.value.trim() : '';
+            if (!texto) return { activo: false, aplicado: 0, captura: NaN, tope: null };
+            const n = parseMonto(texto);
+            const captura = Number.isFinite(n) ? Math.max(0, n) : 0;
+            const tope = typeof concepto.cap === 'function' ? concepto.cap(ingreso) : null;
+            let aplicado = captura;
+            if (tope != null && Number.isFinite(tope)) aplicado = Math.min(aplicado, Math.max(0, tope));
+            return { activo: true, aplicado, captura, tope };
+        }
+
+        function estadoDesglose() {
+            const ingreso = ingresoAnualActual();
+            let activo = false;
+            let suma = 0;
+            CONCEPTOS_GASTO.forEach((concepto) => {
+                const leido = leerConcepto(concepto, ingreso);
+                if (leido.activo) activo = true;
+                suma += leido.aplicado;
+            });
+            return { activo, suma, ingreso };
+        }
+
+        function sincronizarTotalGastos() {
+            const input = $('gastos-personales');
+            const nota = $('gastos-suma-nota');
+            const btn = document.querySelector('[data-input="gastos-personales"]');
+            const estado = estadoDesglose();
+
+            if (estado.activo) {
+                if (!gastosBloqueados) {
+                    input.dataset.manual = input.value;
+                    gastosBloqueados = true;
+                }
+                const texto = formatearMonto(estado.suma);
+                if (input.value !== texto) input.value = texto;
+                input.readOnly = true;
+                input.setAttribute('aria-readonly', 'true');
+                input.setAttribute('aria-describedby', 'gastos-suma-nota');
+                nota.hidden = false;
+                nota.classList.remove('hidden');
+                if (btn) btn.disabled = true;
+                return estado;
+            }
+
+            if (gastosBloqueados) {
+                gastosBloqueados = false;
+                if (Object.prototype.hasOwnProperty.call(input.dataset, 'manual')) {
+                    input.value = input.dataset.manual;
+                    delete input.dataset.manual;
+                }
+                normalizarCampoMonto(input, true);
+            }
+
+            input.readOnly = false;
+            input.removeAttribute('aria-readonly');
+            input.removeAttribute('aria-describedby');
+            if (nota) {
+                nota.hidden = true;
+                nota.classList.add('hidden');
+            }
+            if (btn) btn.disabled = false;
+            return estado;
+        }
+
+        function pintarAvisosDesglose() {
+            const ingreso = ingresoAnualActual();
+            const ayudaDon = $('ayuda-gasto-donativos');
+            if (ayudaDon) {
+                ayudaDon.textContent = ingreso > 0
+                    ? `Tope: 7% del ingreso anual (${monedaPrecisa(ingreso * 0.07)}).`
+                    : 'Tope: 7% del ingreso anual.';
+            }
+            const ayudaFun = $('ayuda-gasto-funerarios');
+            if (ayudaFun) ayudaFun.textContent = `Tope: 1 UMA anual (${monedaPrecisa(UMA_2026.anual)}).`;
+
+            CONCEPTOS_GASTO.forEach((concepto) => {
+                const aviso = $('aviso-' + concepto.id);
+                if (!aviso) return;
+                const leido = leerConcepto(concepto, ingreso);
+                const excede = leido.activo && leido.tope != null && Number.isFinite(leido.captura) && leido.captura > leido.tope + 0.001;
+                aviso.hidden = !excede;
+                aviso.classList.toggle('hidden', !excede);
+                aviso.textContent = excede ? `Supera el tope: se consideran ${monedaPrecisa(leido.tope)}.` : '';
+            });
+        }
+
+        function leerFilaColegiatura(row) {
+            const nivel = row.querySelector('select').value;
+            const info = NIVELES_COLEGIATURA.find((item) => item.value === nivel) || null;
+            const input = row.querySelector('[data-monto]');
+            const texto = input.value.trim();
+            const n = texto ? parseMonto(texto) : NaN;
+            const tieneMonto = Number.isFinite(n);
+            const captura = tieneMonto ? Math.max(0, n) : 0;
+            const aplicado = info && tieneMonto ? Math.min(captura, info.tope) : 0;
+            return { info, tieneMonto, captura, aplicado };
+        }
+
+        function pintarColegiaturas() {
+            let suma = 0;
+            document.querySelectorAll('#colegiaturas-lista .colegiatura-row').forEach((row) => {
+                const fila = leerFilaColegiatura(row);
+                suma += fila.aplicado;
+                row.querySelector('[data-tope-nivel]').textContent = fila.info
+                    ? `Tope ${monedaPrecisa(fila.info.tope)}`
+                    : 'Tope: elige el nivel';
+                const aviso = row.querySelector('.gasto-aviso');
+                let mensaje = '';
+                if (fila.tieneMonto && !fila.info) mensaje = 'Elige el nivel para aplicar el tope.';
+                else if (fila.info && fila.tieneMonto && fila.captura > fila.info.tope + 0.001) {
+                    mensaje = `Supera el tope: se deducen ${monedaPrecisa(fila.info.tope)}.`;
+                }
+                aviso.hidden = !mensaje;
+                aviso.classList.toggle('hidden', !mensaje);
+                aviso.textContent = mensaje;
+            });
+
+            const resumen = $('colegiaturas-suma');
+            if (resumen) {
+                const visible = suma > 0;
+                resumen.hidden = !visible;
+                resumen.classList.toggle('hidden', !visible);
+                resumen.textContent = visible ? `Se deducen ${formatearMoneda(suma)} fuera del tope del 15%.` : '';
+            }
+            return suma;
+        }
+
+        function crearFilaAlumno() {
+            alumnoSeq += 1;
+            const n = alumnoSeq;
+            const row = document.createElement('div');
+            row.className = 'colegiatura-row';
+            const opciones = NIVELES_COLEGIATURA.map((nivel) => `<option value="${nivel.value}">${nivel.label}</option>`).join('');
+            row.innerHTML = `
+                <div class="colegiatura-nivel">
+                    <label for="colegiatura-nivel-${n}">Nivel</label>
+                    <div class="colegiatura-select-line">
+                        <select id="colegiatura-nivel-${n}">
+                            <option value="">Elige el nivel</option>
+                            ${opciones}
+                        </select>
+                        <span class="colegiatura-tope" data-tope-nivel>Tope: elige el nivel</span>
+                    </div>
+                </div>
+                <div class="colegiatura-monto-line">
+                    <div class="colegiatura-monto">
+                        <label for="colegiatura-monto-${n}">Monto anual</label>
+                        <input type="text" id="colegiatura-monto-${n}" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto>
+                    </div>
+                    <button type="button" class="colegiatura-quitar" aria-label="Quitar alumno">
+                        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12"/><path d="M9 7V5.5h6V7"/><path d="M8.2 7.5 9 19h6l.8-11.5"/></svg>
+                        Quitar
+                    </button>
+                </div>
+                <p class="gasto-aviso hidden" hidden></p>
+            `;
+            return row;
+        }
+
+        function programarRecalculo() {
+            if ($('comparison-section').classList.contains('hidden')) return;
+            clearTimeout(recalcTimer);
+            recalcTimer = setTimeout(calcularConDeducciones, 300);
+        }
+
+        function setDesgloseAbierto(abierto) {
+            const btn = $('desglose-toggle');
+            const panel = $('desglose-panel');
+            btn.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+            panel.hidden = !abierto;
+            panel.classList.toggle('hidden', !abierto);
+        }
+
         function mostrarError(msg) {
             const el = $('salario-error');
             el.textContent = msg || '';
@@ -1108,6 +1601,10 @@
                 limites
             };
 
+            pintarAvisosDesglose();
+            sincronizarTotalGastos();
+            pintarColegiaturas();
+
             // Si la comparación ya es visible, se actualiza con los nuevos datos
             if (!$('comparison-section').classList.contains('hidden')) {
                 calcularConDeducciones();
@@ -1120,18 +1617,21 @@
                 return;
             }
 
-            ['gastos-personales', 'ppr', 'cuenta-especial'].forEach((id) => normalizarCampoMonto($(id), false));
+            sincronizarTotalGastos();
+            document.querySelectorAll('.estimulos-card [data-monto]').forEach((el) => normalizarCampoMonto(el, false));
+            pintarAvisosDesglose();
 
             const gastosPersonales = parseMonto($('gastos-personales').value) || 0;
             const ppr = parseMonto($('ppr').value) || 0;
             const cuentaEspecial = parseMonto($('cuenta-especial').value) || 0;
 
-            // Aplicar límites según LISR
+            // El tope global de gastos personales no cambia. Colegiaturas van aparte.
             const gastosLimitados = Math.min(Math.max(gastosPersonales, 0), datosBase.limites.gastosPersonales);
             const pprLimitado = Math.min(Math.max(ppr, 0), datosBase.limites.ppr);
             const cuentaLimitada = Math.min(Math.max(cuentaEspecial, 0), datosBase.limites.cuentaEspecial);
+            const colegiaturas = pintarColegiaturas();
 
-            const totalDeducciones = gastosLimitados + pprLimitado + cuentaLimitada;
+            const totalDeducciones = gastosLimitados + colegiaturas + pprLimitado + cuentaLimitada;
             const ingresoGravable = Math.max(0, datosBase.ingresoAnual - totalDeducciones);
             const resultadoConDeducciones = calcularISRAnual(ingresoGravable);
 
@@ -1170,6 +1670,8 @@
             $('rendimiento-fiscal').textContent = `${rendimientoFiscal}%`;
             $('nota-calculo').textContent =
                 `Inversión: ${formatearMoneda(totalInvertido)} - Ahorro: ${formatearMoneda(ahorro)} = Costo Real: ${formatearMoneda(costoReal)}`;
+            $('deducciones-resumen').textContent =
+                `Deducciones aplicadas: gastos personales ${formatearMoneda(gastosLimitados)} · colegiaturas ${formatearMoneda(colegiaturas)} · PPR ${formatearMoneda(pprLimitado)} · cuenta especial ${formatearMoneda(cuentaLimitada)} · total ${formatearMoneda(totalDeducciones)}.`;
 
             const seccion = $('comparison-section');
             seccion.classList.remove('hidden');
@@ -1187,8 +1689,17 @@
             }
         });
 
-        document.querySelectorAll('[data-monto]').forEach((input) => {
-            input.addEventListener('blur', () => normalizarCampoMonto(input, true));
+        document.addEventListener('focusout', (e) => {
+            if (!(e.target instanceof Element) || !e.target.matches('[data-monto]')) return;
+            normalizarCampoMonto(e.target, true);
+            if (e.target.closest('#desglose-panel')) {
+                sincronizarTotalGastos();
+                pintarAvisosDesglose();
+                programarRecalculo();
+            } else if (e.target.closest('#colegiaturas-lista')) {
+                pintarColegiaturas();
+                programarRecalculo();
+            }
         });
 
         // Enter en los campos de monto
@@ -1215,11 +1726,64 @@
         // Botones "Usar tope máximo"
         document.querySelectorAll('.pill[data-tope]').forEach((btn) => {
             btn.addEventListener('click', () => {
+                const campo = $(btn.dataset.input);
+                if (!campo || campo.readOnly) return;
                 if (!datosBase) { calcularBase(); }
                 if (!datosBase) return;
-                $(btn.dataset.input).value = formatearMonto(Math.floor(datosBase.limites[btn.dataset.tope]));
+                campo.value = formatearMonto(Math.floor(datosBase.limites[btn.dataset.tope]));
                 calcularConDeducciones();
             });
+        });
+
+        pintarAvisosDesglose();
+
+        $('desglose-toggle').addEventListener('click', () => {
+            setDesgloseAbierto($('desglose-toggle').getAttribute('aria-expanded') !== 'true');
+        });
+
+        $('agregar-alumno').addEventListener('click', () => {
+            const lista = $('colegiaturas-lista');
+            lista.appendChild(crearFilaAlumno());
+            const select = lista.lastElementChild.querySelector('select');
+            if (select) select.focus();
+            pintarColegiaturas();
+        });
+
+        const estimulosCard = document.querySelector('.estimulos-card');
+        estimulosCard.addEventListener('input', (e) => {
+            if (e.target.closest('#desglose-panel')) {
+                sincronizarTotalGastos();
+                pintarAvisosDesglose();
+                programarRecalculo();
+            } else if (e.target.closest('#colegiaturas-lista')) {
+                pintarColegiaturas();
+                programarRecalculo();
+            }
+        });
+        estimulosCard.addEventListener('change', (e) => {
+            if (!e.target.closest('#colegiaturas-lista')) return;
+            pintarColegiaturas();
+            programarRecalculo();
+        });
+        estimulosCard.addEventListener('click', (e) => {
+            const quitar = e.target.closest('.colegiatura-quitar');
+            if (!quitar) return;
+            quitar.closest('.colegiatura-row').remove();
+            pintarColegiaturas();
+            programarRecalculo();
+        });
+        estimulosCard.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter' || !(e.target instanceof Element)) return;
+            if (!e.target.matches('#desglose-panel [data-monto], #colegiaturas-lista [data-monto]')) return;
+            e.preventDefault();
+            normalizarCampoMonto(e.target, true);
+            if (e.target.closest('#desglose-panel')) {
+                sincronizarTotalGastos();
+                pintarAvisosDesglose();
+            } else {
+                pintarColegiaturas();
+            }
+            calcularConDeducciones();
         });
     </script>
 

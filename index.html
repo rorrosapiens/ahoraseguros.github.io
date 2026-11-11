@@ -481,6 +481,36 @@
             font-weight: 600;
             margin: 0 0 6px;
         }
+        .maximo-linea {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px 8px;
+            margin: 0 0 6px;
+            min-width: 0;
+        }
+        .maximo-linea span {
+            flex: 1 1 140px;
+            min-width: 0;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #9a3412;
+            line-height: 1.35;
+        }
+        .pill-mini {
+            flex: none;
+            padding: 4px 10px;
+            font-size: 0.72rem;
+        }
+        .nota-ppr-desglose { margin-bottom: 0; }
+        #aviso-tope-gastos {
+            margin-top: 8px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            background: #fff7ed;
+            border: 1px solid #fdba74;
+        }
         .gasto-aviso {
             margin: 4px 0 0;
             font-size: 0.75rem;
@@ -621,7 +651,8 @@
             #gastos-suma-nota {
                 max-width: 520px;
             }
-            .colegiaturas-bloque { grid-column: 1 / -1; }
+            .colegiaturas-bloque,
+            .nota-ppr-desglose { grid-column: 1 / -1; }
         }
         @media (prefers-reduced-motion: reduce) {
             .desglose-toggle .chevron { transition: none; }
@@ -995,7 +1026,7 @@
                             </div>
                             <div class="limite">(Límite: $45,000)</div>
                             <input type="text" id="gastos-personales" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto>
-                            <p class="gasto-aviso hidden" id="aviso-tope-gastos" hidden></p>
+                            <p class="gasto-aviso comparacion-tope hidden" id="aviso-tope-gastos" hidden></p>
                             <p id="gastos-suma-nota" class="suma-nota hidden" hidden>
                                 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
                                 Suma de tu desglose
@@ -1008,39 +1039,64 @@
                                 <div class="gasto-campo">
                                     <label for="gasto-medicos">Gastos médicos, dentales y hospitalarios</label>
                                     <p class="gasto-ayuda" id="ayuda-gasto-medicos">Consultas, cirugías, análisis y optometrista.</p>
-                                    <input type="text" id="gasto-medicos" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-medicos">
+                                    <div class="maximo-linea">
+                                        <span id="maximo-gasto-medicos">Máximo sugerido: calcula tu ingreso</span>
+                                        <button type="button" class="pill pill-mini" data-usar-maximo="gasto-medicos">Usar máximo</button>
+                                    </div>
+                                    <input type="text" id="gasto-medicos" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-medicos maximo-gasto-medicos">
                                     <p class="gasto-aviso hidden" id="aviso-gasto-medicos" hidden></p>
                                 </div>
                                 <div class="gasto-campo">
                                     <label for="gasto-primas">Primas de seguro de gastos médicos</label>
                                     <p class="gasto-ayuda" id="ayuda-gasto-primas">Para ti, tu cónyuge, tus hijos o tus padres.</p>
-                                    <input type="text" id="gasto-primas" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-primas">
+                                    <div class="maximo-linea">
+                                        <span id="maximo-gasto-primas">Máximo sugerido: calcula tu ingreso</span>
+                                        <button type="button" class="pill pill-mini" data-usar-maximo="gasto-primas">Usar máximo</button>
+                                    </div>
+                                    <input type="text" id="gasto-primas" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-primas maximo-gasto-primas">
                                     <p class="gasto-aviso hidden" id="aviso-gasto-primas" hidden></p>
                                 </div>
                                 <div class="gasto-campo">
                                     <label for="gasto-hipoteca">Intereses reales de crédito hipotecario</label>
-                                    <p class="gasto-ayuda" id="ayuda-gasto-hipoteca">Solo los intereses reales pagados en el año.</p>
-                                    <input type="text" id="gasto-hipoteca" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-hipoteca">
+                                    <p class="gasto-ayuda" id="ayuda-gasto-hipoteca">Solo el interés real. El crédito del inmueble no debe exceder 750,000 UDIS.</p>
+                                    <div class="maximo-linea">
+                                        <span id="maximo-gasto-hipoteca">Máximo sugerido: calcula tu ingreso</span>
+                                        <button type="button" class="pill pill-mini" data-usar-maximo="gasto-hipoteca">Usar máximo</button>
+                                    </div>
+                                    <input type="text" id="gasto-hipoteca" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-hipoteca maximo-gasto-hipoteca">
                                     <p class="gasto-aviso hidden" id="aviso-gasto-hipoteca" hidden></p>
                                 </div>
                                 <div class="gasto-campo">
                                     <label for="gasto-donativos">Donativos a instituciones autorizadas</label>
-                                    <p class="gasto-ayuda" id="ayuda-gasto-donativos">Tope: 7% del ingreso anual.</p>
-                                    <input type="text" id="gasto-donativos" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-donativos aviso-gasto-donativos">
+                                    <p class="gasto-ayuda" id="ayuda-gasto-donativos">La ley toma el ingreso del año anterior; aquí se estima con el de esta pantalla.</p>
+                                    <div class="maximo-linea">
+                                        <span id="maximo-gasto-donativos">Máximo sugerido: calcula tu ingreso</span>
+                                        <button type="button" class="pill pill-mini" data-usar-maximo="gasto-donativos">Usar máximo</button>
+                                    </div>
+                                    <input type="text" id="gasto-donativos" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-donativos maximo-gasto-donativos aviso-gasto-donativos">
                                     <p class="gasto-aviso hidden" id="aviso-gasto-donativos" hidden></p>
                                 </div>
                                 <div class="gasto-campo">
                                     <label for="gasto-transporte">Transporte escolar obligatorio</label>
-                                    <p class="gasto-ayuda" id="ayuda-gasto-transporte">Solo cuando es obligatorio para el alumno.</p>
-                                    <input type="text" id="gasto-transporte" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-transporte">
+                                    <p class="gasto-ayuda" id="ayuda-gasto-transporte">Solo cuando es obligatorio o viene separado en la factura.</p>
+                                    <div class="maximo-linea">
+                                        <span id="maximo-gasto-transporte">Máximo sugerido: calcula tu ingreso</span>
+                                        <button type="button" class="pill pill-mini" data-usar-maximo="gasto-transporte">Usar máximo</button>
+                                    </div>
+                                    <input type="text" id="gasto-transporte" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-transporte maximo-gasto-transporte">
                                     <p class="gasto-aviso hidden" id="aviso-gasto-transporte" hidden></p>
                                 </div>
                                 <div class="gasto-campo">
                                     <label for="gasto-funerarios">Gastos funerarios</label>
-                                    <p class="gasto-ayuda" id="ayuda-gasto-funerarios">Tope: 1 UMA anual ($42,794.64).</p>
-                                    <input type="text" id="gasto-funerarios" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-funerarios aviso-gasto-funerarios">
+                                    <p class="gasto-ayuda" id="ayuda-gasto-funerarios">Para las personas que cubre la fracción de gastos médicos.</p>
+                                    <div class="maximo-linea">
+                                        <span id="maximo-gasto-funerarios">Máximo sugerido: 1 UMA anual</span>
+                                        <button type="button" class="pill pill-mini" data-usar-maximo="gasto-funerarios">Usar máximo</button>
+                                    </div>
+                                    <input type="text" id="gasto-funerarios" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-funerarios maximo-gasto-funerarios aviso-gasto-funerarios">
                                     <p class="gasto-aviso hidden" id="aviso-gasto-funerarios" hidden></p>
                                 </div>
+                                <p class="gasto-ayuda nota-ppr-desglose">Las aportaciones complementarias de retiro (art. 151 fr. V) se capturan en PPR, no aquí. Su tope es el menor entre 10% del ingreso y 5 UMA.</p>
                                 <div class="colegiaturas-bloque" id="colegiaturas-bloque" aria-labelledby="colegiaturas-titulo">
                                     <h5 id="colegiaturas-titulo">
                                         <span class="mark" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5.2h6.2A2.3 2.3 0 0 1 12.5 7.5V19a2 2 0 0 0-2.3-1.4H4z"/><path d="M20 5.2h-6.2A2.3 2.3 0 0 0 11.5 7.5V19a2 2 0 0 1 2.3-1.4H20z"/></svg></span>
@@ -1356,12 +1412,12 @@
         let datosBase = null;
 
         const CONCEPTOS_GASTO = [
-            { id: 'gasto-medicos' },
-            { id: 'gasto-primas' },
-            { id: 'gasto-hipoteca' },
-            { id: 'gasto-donativos', cap: (ingreso) => ingreso * 0.07 },
-            { id: 'gasto-transporte' },
-            { id: 'gasto-funerarios', cap: () => UMA_2026.anual }
+            { id: 'gasto-medicos', tipo: 'general', cita: 'Art. 151 fr. I' },
+            { id: 'gasto-primas', tipo: 'general', cita: 'Art. 151 fr. VI' },
+            { id: 'gasto-hipoteca', tipo: 'general', cita: 'Art. 151 fr. IV' },
+            { id: 'gasto-donativos', tipo: 'donativos', cita: 'Art. 151 fr. III', cap: (ingreso) => ingreso * 0.07 },
+            { id: 'gasto-transporte', tipo: 'general', cita: 'Art. 151 fr. VII' },
+            { id: 'gasto-funerarios', tipo: 'uma', cita: 'Art. 151 fr. II', cap: () => UMA_2026.anual }
         ];
 
         const NIVELES_COLEGIATURA = [
@@ -1464,13 +1520,89 @@
                 `(Límite: ${formatearMoneda(limites.cuentaEspecial)})`;
         }
 
+        function ganoPorcentaje(limite) {
+            return limite + 0.5 < cincoUMAsAnuales();
+        }
+
+        function fraseLimite(limite, etiqueta) {
+            const cinco = formatearMoneda(cincoUMAsAnuales());
+            if (ganoPorcentaje(limite)) {
+                return `Ganó el ${etiqueta} del ingreso (${formatearMoneda(limite)}), menor que 5 UMA (${cinco}).`;
+            }
+            return `Ganó 5 UMA (${cinco}), menor que el ${etiqueta} del ingreso.`;
+        }
+
+        function textoComparacionGastos(capturado, limite) {
+            if (!Number.isFinite(capturado) || capturado <= 0 || !Number.isFinite(limite)) return '';
+            const aplicado = Math.min(capturado, Math.max(0, limite));
+            const techo = fraseLimite(limite, '15%');
+            if (capturado > limite + 0.009) {
+                return `Capturado: ${formatearMoneda(capturado)}. Se deducen ${formatearMoneda(aplicado)}. ${techo}`;
+            }
+            return `Capturado: ${formatearMoneda(capturado)}. Se deduce completo. ${techo}`;
+        }
+
         function textoTopeAplicado(capturado, limite, etiqueta) {
             if (!Number.isFinite(capturado) || !Number.isFinite(limite) || capturado <= limite + 0.009) return '';
-            const porPorcentaje = limite + 0.5 < cincoUMAsAnuales();
-            const motivo = porPorcentaje
-                ? `${etiqueta} del ingreso anual, menor que 5 UMA`
-                : `5 UMA anuales, menor que el ${etiqueta}`;
-            return `Supera el tope: se consideran ${formatearMoneda(limite)} (${motivo}).`;
+            return `Capturado: ${formatearMoneda(capturado)}. Se deducen ${formatearMoneda(Math.min(capturado, limite))}. ${fraseLimite(limite, etiqueta)}`;
+        }
+
+        function montoMaximoConcepto(concepto) {
+            const ingreso = ingresoAnualActual();
+            const general = datosBase ? datosBase.limites.gastosPersonales : 0;
+            if (concepto.tipo === 'uma') {
+                return { monto: UMA_2026.anual, listo: true };
+            }
+            if (concepto.tipo === 'donativos') {
+                if (!(ingreso > 0)) return { monto: 0, listo: false };
+                return { monto: ingreso * 0.07, listo: true };
+            }
+            if (!(general > 0)) return { monto: 0, listo: false };
+            return { monto: general, listo: true };
+        }
+
+        function textoMaximoConcepto(concepto) {
+            const max = montoMaximoConcepto(concepto);
+            if (!max.listo) return `${concepto.cita}. Calcula tu ingreso para ver el máximo.`;
+            if (concepto.tipo === 'uma') {
+                return `Máximo: ${monedaPrecisa(max.monto)} · ${concepto.cita} · 1 UMA anual`;
+            }
+            if (concepto.tipo === 'donativos') {
+                return `Máximo: ${formatearMoneda(max.monto)} · ${concepto.cita} · 7% del ingreso de esta pantalla`;
+            }
+            return `Máximo: ${formatearMoneda(max.monto)} · ${concepto.cita} · solo aplica el tope general`;
+        }
+
+        function pintarMaximosSugeridos() {
+            CONCEPTOS_GASTO.forEach((concepto) => {
+                const etiqueta = $('maximo-' + concepto.id);
+                const boton = document.querySelector(`[data-usar-maximo="${concepto.id}"]`);
+                const max = montoMaximoConcepto(concepto);
+                if (etiqueta) etiqueta.textContent = textoMaximoConcepto(concepto);
+                if (boton) boton.disabled = !max.listo;
+            });
+        }
+
+        function aplicarMaximoConcepto(id) {
+            const concepto = CONCEPTOS_GASTO.find((item) => item.id === id);
+            if (!concepto || !datosBase) return;
+            const max = montoMaximoConcepto(concepto);
+            if (!max.listo || !(max.monto > 0)) return;
+            const input = $(id);
+            input.value = formatearMonto(max.monto);
+            sincronizarTotalGastos();
+            pintarAvisosDesglose();
+            if (!$('comparison-section').classList.contains('hidden')) calcularConDeducciones();
+        }
+
+        function aplicarMaximoColegiatura(row) {
+            const nivel = row.querySelector('select').value;
+            const info = NIVELES_COLEGIATURA.find((item) => item.value === nivel);
+            if (!info) return;
+            const input = row.querySelector('[data-monto]');
+            input.value = formatearMonto(info.tope);
+            pintarColegiaturas();
+            if (!$('comparison-section').classList.contains('hidden')) calcularConDeducciones();
         }
 
         function ponerAvisoTope(el, mensaje) {
@@ -1487,7 +1619,7 @@
             const ppr = parseMonto($('ppr').value);
             ponerAvisoTope(
                 $('aviso-tope-gastos'),
-                textoTopeAplicado(Number.isFinite(gastos) ? gastos : 0, datosBase.limites.gastosPersonales, '15%')
+                textoComparacionGastos(Number.isFinite(gastos) ? Math.max(gastos, 0) : 0, datosBase.limites.gastosPersonales)
             );
             ponerAvisoTope(
                 $('aviso-tope-ppr'),
@@ -1496,16 +1628,8 @@
         }
 
         function pintarAvisosDesglose() {
+            pintarMaximosSugeridos();
             const ingreso = ingresoAnualActual();
-            const ayudaDon = $('ayuda-gasto-donativos');
-            if (ayudaDon) {
-                ayudaDon.textContent = ingreso > 0
-                    ? `Tope: 7% del ingreso anual (${monedaPrecisa(ingreso * 0.07)}).`
-                    : 'Tope: 7% del ingreso anual.';
-            }
-            const ayudaFun = $('ayuda-gasto-funerarios');
-            if (ayudaFun) ayudaFun.textContent = `Tope: 1 UMA anual (${monedaPrecisa(UMA_2026.anual)}).`;
-
             CONCEPTOS_GASTO.forEach((concepto) => {
                 const aviso = $('aviso-' + concepto.id);
                 if (!aviso) return;
@@ -1534,9 +1658,12 @@
             document.querySelectorAll('#colegiaturas-lista .colegiatura-row').forEach((row) => {
                 const fila = leerFilaColegiatura(row);
                 suma += fila.aplicado;
-                row.querySelector('[data-tope-nivel]').textContent = fila.info
-                    ? `Tope ${monedaPrecisa(fila.info.tope)}`
-                    : 'Tope: elige el nivel';
+                const topeEl = row.querySelector('[data-tope-nivel]');
+                const botonMax = row.querySelector('[data-usar-colegiatura]');
+                topeEl.textContent = fila.info
+                    ? `Máximo ${monedaPrecisa(fila.info.tope)} · art. 1.10`
+                    : 'Máximo: elige el nivel';
+                if (botonMax) botonMax.disabled = !fila.info;
                 const aviso = row.querySelector('.gasto-aviso');
                 let mensaje = '';
                 if (fila.tieneMonto && !fila.info) mensaje = 'Elige el nivel para aplicar el tope.';
@@ -1572,7 +1699,8 @@
                             <option value="">Elige el nivel</option>
                             ${opciones}
                         </select>
-                        <span class="colegiatura-tope" data-tope-nivel>Tope: elige el nivel</span>
+                        <span class="colegiatura-tope" data-tope-nivel>Máximo: elige el nivel</span>
+                        <button type="button" class="pill pill-mini" data-usar-colegiatura disabled>Usar máximo</button>
                     </div>
                 </div>
                 <div class="colegiatura-monto-line">
@@ -1684,7 +1812,9 @@
             const cuentaEspecial = parseMonto($('cuenta-especial').value) || 0;
 
             // El tope global de gastos personales no cambia. Colegiaturas van aparte.
-            const gastosLimitados = Math.min(Math.max(gastosPersonales, 0), datosBase.limites.gastosPersonales);
+            const topeGastos = datosBase.limites.gastosPersonales;
+            const gastosCapturados = Math.max(gastosPersonales, 0);
+            const gastosLimitados = Math.min(gastosCapturados, topeGastos);
             const pprLimitado = Math.min(Math.max(ppr, 0), datosBase.limites.ppr);
             const cuentaLimitada = Math.min(Math.max(cuentaEspecial, 0), datosBase.limites.cuentaEspecial);
             const colegiaturas = pintarColegiaturas();
@@ -1728,8 +1858,12 @@
             $('rendimiento-fiscal').textContent = `${rendimientoFiscal}%`;
             $('nota-calculo').textContent =
                 `Inversión: ${formatearMoneda(totalInvertido)} - Ahorro: ${formatearMoneda(ahorro)} = Costo Real: ${formatearMoneda(costoReal)}`;
+            const detalleGastos = gastosCapturados > gastosLimitados + 0.009
+                ? `gastos personales ${formatearMoneda(gastosLimitados)} de ${formatearMoneda(gastosCapturados)} capturados (${ganoPorcentaje(topeGastos) ? 'ganó el 15%' : 'ganó 5 UMA'})`
+                : `gastos personales ${formatearMoneda(gastosLimitados)}`;
             $('deducciones-resumen').textContent =
-                `Deducciones aplicadas: gastos personales ${formatearMoneda(gastosLimitados)} · colegiaturas ${formatearMoneda(colegiaturas)} · PPR ${formatearMoneda(pprLimitado)} · cuenta especial ${formatearMoneda(cuentaLimitada)} · total ${formatearMoneda(totalDeducciones)}.`;
+                `Deducciones aplicadas: ${detalleGastos} · colegiaturas ${formatearMoneda(colegiaturas)} · PPR ${formatearMoneda(pprLimitado)} · cuenta especial ${formatearMoneda(cuentaLimitada)} · total ${formatearMoneda(totalDeducciones)}.`;
+            pintarAvisosTopeGlobal();
 
             const seccion = $('comparison-section');
             seccion.classList.remove('hidden');
@@ -1825,6 +1959,16 @@
             programarRecalculo();
         });
         estimulosCard.addEventListener('click', (e) => {
+            const usar = e.target.closest('[data-usar-maximo]');
+            if (usar) {
+                aplicarMaximoConcepto(usar.dataset.usarMaximo);
+                return;
+            }
+            const usarCole = e.target.closest('[data-usar-colegiatura]');
+            if (usarCole) {
+                aplicarMaximoColegiatura(usarCole.closest('.colegiatura-row'));
+                return;
+            }
             const quitar = e.target.closest('.colegiatura-quitar');
             if (!quitar) return;
             quitar.closest('.colegiatura-row').remove();

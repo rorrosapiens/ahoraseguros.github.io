@@ -621,6 +621,7 @@
             #gastos-suma-nota {
                 max-width: 520px;
             }
+            .colegiaturas-bloque { grid-column: 1 / -1; }
         }
         @media (prefers-reduced-motion: reduce) {
             .desglose-toggle .chevron { transition: none; }
@@ -981,7 +982,7 @@
                             Gastos Personales
                         </h4>
                         <div class="estimulo-copy">
-                            <p><strong>Límite:</strong> 15% del ingreso anual (5 UMAs Anuales = $213,973)</p>
+                            <p><strong>Límite:</strong> el menor entre 15% del ingreso anual y 5 UMA anuales ($213,973)</p>
                             <p><strong>Incluye:</strong> Gastos médicos, dentales, primas de seguro, funerarios, donativos, intereses hipotecarios y transporte escolar</p>
                             <p class="art">Art. 151 LISR</p>
                         </div>
@@ -994,6 +995,7 @@
                             </div>
                             <div class="limite">(Límite: $45,000)</div>
                             <input type="text" id="gastos-personales" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto>
+                            <p class="gasto-aviso hidden" id="aviso-tope-gastos" hidden></p>
                             <p id="gastos-suma-nota" class="suma-nota hidden" hidden>
                                 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
                                 Suma de tu desglose
@@ -1039,18 +1041,18 @@
                                     <input type="text" id="gasto-funerarios" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto aria-describedby="ayuda-gasto-funerarios aviso-gasto-funerarios">
                                     <p class="gasto-aviso hidden" id="aviso-gasto-funerarios" hidden></p>
                                 </div>
-                            </div>
-                            <div class="colegiaturas-bloque" id="colegiaturas-bloque" aria-labelledby="colegiaturas-titulo">
-                                <h5 id="colegiaturas-titulo">
-                                    <span class="mark" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5.2h6.2A2.3 2.3 0 0 1 12.5 7.5V19a2 2 0 0 0-2.3-1.4H4z"/><path d="M20 5.2h-6.2A2.3 2.3 0 0 0 11.5 7.5V19a2 2 0 0 1 2.3-1.4H20z"/></svg></span>
-                                    Colegiaturas
-                                </h5>
-                                <p class="colegiaturas-aparte">No entra en el tope del 15%</p>
-                                <p class="art">Decreto DOF 26-dic-2013, arts. 1.8–1.10 · <a href="https://www.sat.gob.mx/minisitio/DeduccionesPersonales/colegiaturas.html" target="_blank" rel="noopener">SAT</a></p>
-                                <p class="gasto-ayuda">Solo la colegiatura (no inscripción ni reinscripción) de escuela privada con RVOE. Un renglón por alumno; si cursó dos niveles en el año, elige el de mayor tope.</p>
-                                <div id="colegiaturas-lista" class="colegiaturas-lista"></div>
-                                <button type="button" id="agregar-alumno" class="btn-agregar">+ Agregar alumno</button>
-                                <p id="colegiaturas-suma" class="suma-nota hidden" hidden></p>
+                                <div class="colegiaturas-bloque" id="colegiaturas-bloque" aria-labelledby="colegiaturas-titulo">
+                                    <h5 id="colegiaturas-titulo">
+                                        <span class="mark" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5.2h6.2A2.3 2.3 0 0 1 12.5 7.5V19a2 2 0 0 0-2.3-1.4H4z"/><path d="M20 5.2h-6.2A2.3 2.3 0 0 0 11.5 7.5V19a2 2 0 0 1 2.3-1.4H20z"/></svg></span>
+                                        Colegiaturas
+                                    </h5>
+                                    <p class="colegiaturas-aparte">No entra en el tope del 15%</p>
+                                    <p class="art">Decreto DOF 26-dic-2013, arts. 1.8–1.10 · <a href="https://www.sat.gob.mx/minisitio/DeduccionesPersonales/colegiaturas.html" target="_blank" rel="noopener">SAT</a></p>
+                                    <p class="gasto-ayuda">Solo la colegiatura (no inscripción ni reinscripción) de escuela privada con RVOE. Un renglón por alumno; si cursó dos niveles en el año, elige el de mayor tope.</p>
+                                    <div id="colegiaturas-lista" class="colegiaturas-lista"></div>
+                                    <button type="button" id="agregar-alumno" class="btn-agregar">+ Agregar alumno</button>
+                                    <p id="colegiaturas-suma" class="suma-nota hidden" hidden></p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1065,7 +1067,7 @@
                             <img class="cochinito" src="ppr-cochinito.png" alt="Cochinito de ahorro para el retiro">
                         </div>
                         <div class="estimulo-copy">
-                            <p><strong>Límite:</strong> 10% del ingreso anual (5 UMAs Anuales = $213,973)</p>
+                            <p><strong>Límite:</strong> el menor entre 10% del ingreso anual y 5 UMA anuales ($213,973)</p>
                             <p><strong>Beneficio:</strong> Deducible 100%, retiro después de 5 años</p>
                             <p class="art">Art. 151 Fracción V LISR</p>
                         </div>
@@ -1078,6 +1080,7 @@
                             </div>
                             <div class="limite">(Límite: $30,000)</div>
                             <input type="text" id="ppr" placeholder="0" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" data-monto>
+                            <p class="gasto-aviso hidden" id="aviso-tope-ppr" hidden></p>
                         </div>
                     </div>
 
@@ -1260,11 +1263,18 @@
             return { isr: 0, tasa: 0 };
         }
 
+        function cincoUMAsAnuales() {
+            return UMA_2026.anual * 5; // $213,973.20
+        }
+
+        // Siempre el menor entre el porcentaje del ingreso y 5 UMA.
+        // Gastos personales: 15%. PPR (art. 151 fr. V): 10%.
         function calcularLimites(ingresoAnual) {
-            const cincoUMAs = UMA_2026.anual * 5; // $213,973.20
+            const cincoUMAs = cincoUMAsAnuales();
+            const ingreso = Math.max(0, Number(ingresoAnual) || 0);
             return {
-                gastosPersonales: Math.min(ingresoAnual * 0.15, cincoUMAs),
-                ppr: Math.min(ingresoAnual * 0.10, cincoUMAs),
+                gastosPersonales: Math.min(ingreso * 0.15, cincoUMAs),
+                ppr: Math.min(ingreso * 0.10, cincoUMAs),
                 cuentaEspecial: 152000 // Límite fijo
             };
         }
@@ -1420,6 +1430,7 @@
                 nota.hidden = false;
                 nota.classList.remove('hidden');
                 if (btn) btn.disabled = true;
+                pintarAvisosTopeGlobal();
                 return estado;
             }
 
@@ -1440,7 +1451,48 @@
                 nota.classList.add('hidden');
             }
             if (btn) btn.disabled = false;
+            pintarAvisosTopeGlobal();
             return estado;
+        }
+
+        function publicarLimites(limites) {
+            document.querySelector('label[for="gastos-personales"]').closest('.estimulo-item').querySelector('.limite').textContent =
+                `(Límite: ${formatearMoneda(limites.gastosPersonales)})`;
+            document.querySelector('label[for="ppr"]').closest('.estimulo-item').querySelector('.limite').textContent =
+                `(Límite: ${formatearMoneda(limites.ppr)})`;
+            document.querySelector('label[for="cuenta-especial"]').closest('.estimulo-item').querySelector('.limite').textContent =
+                `(Límite: ${formatearMoneda(limites.cuentaEspecial)})`;
+        }
+
+        function textoTopeAplicado(capturado, limite, etiqueta) {
+            if (!Number.isFinite(capturado) || !Number.isFinite(limite) || capturado <= limite + 0.009) return '';
+            const porPorcentaje = limite + 0.5 < cincoUMAsAnuales();
+            const motivo = porPorcentaje
+                ? `${etiqueta} del ingreso anual, menor que 5 UMA`
+                : `5 UMA anuales, menor que el ${etiqueta}`;
+            return `Supera el tope: se consideran ${formatearMoneda(limite)} (${motivo}).`;
+        }
+
+        function ponerAvisoTope(el, mensaje) {
+            if (!el) return;
+            const visible = !!mensaje;
+            el.hidden = !visible;
+            el.classList.toggle('hidden', !visible);
+            el.textContent = mensaje || '';
+        }
+
+        function pintarAvisosTopeGlobal() {
+            if (!datosBase) return;
+            const gastos = parseMonto($('gastos-personales').value);
+            const ppr = parseMonto($('ppr').value);
+            ponerAvisoTope(
+                $('aviso-tope-gastos'),
+                textoTopeAplicado(Number.isFinite(gastos) ? gastos : 0, datosBase.limites.gastosPersonales, '15%')
+            );
+            ponerAvisoTope(
+                $('aviso-tope-ppr'),
+                textoTopeAplicado(Number.isFinite(ppr) ? ppr : 0, datosBase.limites.ppr, '10%')
+            );
         }
 
         function pintarAvisosDesglose() {
@@ -1558,17 +1610,7 @@
             el.classList.toggle('hidden', !msg);
         }
 
-        function calcularBase() {
-            const campoSalario = $('salario-mensual');
-            normalizarCampoMonto(campoSalario, true);
-            const salarioMensual = parseMonto(campoSalario.value);
-
-            if (!salarioMensual || salarioMensual <= 0) {
-                mostrarError('Por favor ingresa un salario válido');
-                return;
-            }
-            mostrarError('');
-
+        function establecerBase(salarioMensual) {
             const ingresoAnual = salarioMensual * 12;
             const resultado = calcularISRAnual(ingresoAnual);
             const resultadoMensual = calcularISRMensual(salarioMensual);
@@ -1576,19 +1618,12 @@
             const mesesSAT = (resultado.isr / salarioMensual).toFixed(1);
             const limites = calcularLimites(ingresoAnual);
 
-            document.querySelector('label[for="gastos-personales"]').closest('.estimulo-item').querySelector('.limite').textContent =
-                `(Límite: ${formatearMoneda(limites.gastosPersonales)})`;
-            document.querySelector('label[for="ppr"]').closest('.estimulo-item').querySelector('.limite').textContent =
-                `(Límite: ${formatearMoneda(limites.ppr)})`;
-            document.querySelector('label[for="cuenta-especial"]').closest('.estimulo-item').querySelector('.limite').textContent =
-                `(Límite: ${formatearMoneda(limites.cuentaEspecial)})`;
-
+            publicarLimites(limites);
             $('ingreso-anual').textContent = formatearMoneda(ingresoAnual);
             $('isr-anual').textContent = formatearMoneda(resultado.isr);
             $('tasa-anual').textContent = `Tasa: ${resultado.tasa}%`;
             $('isr-mensual').textContent = formatearMoneda(isrMensual);
             $('meses-sat').textContent = `${mesesSAT} meses`;
-
             $('meses-sat-text').textContent = `${mesesSAT} meses`;
             $('sat-warning-message').classList.remove('hidden');
             $('results-section').classList.remove('hidden');
@@ -1604,6 +1639,20 @@
             pintarAvisosDesglose();
             sincronizarTotalGastos();
             pintarColegiaturas();
+            pintarAvisosTopeGlobal();
+        }
+
+        function calcularBase() {
+            const campoSalario = $('salario-mensual');
+            normalizarCampoMonto(campoSalario, true);
+            const salarioMensual = parseMonto(campoSalario.value);
+
+            if (!salarioMensual || salarioMensual <= 0) {
+                mostrarError('Por favor ingresa un salario válido');
+                return;
+            }
+            mostrarError('');
+            establecerBase(salarioMensual);
 
             // Si la comparación ya es visible, se actualiza con los nuevos datos
             if (!$('comparison-section').classList.contains('hidden')) {
@@ -1616,6 +1665,15 @@
                 mostrarError('Primero calcula tus impuestos básicos');
                 return;
             }
+
+            // El tope se vuelve a medir con el salario que está en pantalla.
+            // Si no, un ingreso alto deja guardadas las 5 UMA y un ingreso menor ya no compara el 15% ni el 10%.
+            const salarioActual = parseMonto($('salario-mensual').value);
+            if (Number.isFinite(salarioActual) && salarioActual > 0 && Math.abs(salarioActual - datosBase.salarioMensual) > 0.001) {
+                establecerBase(salarioActual);
+            }
+            datosBase.limites = calcularLimites(datosBase.ingresoAnual);
+            publicarLimites(datosBase.limites);
 
             sincronizarTotalGastos();
             document.querySelectorAll('.estimulos-card [data-monto]').forEach((el) => normalizarCampoMonto(el, false));
@@ -1689,17 +1747,24 @@
             }
         });
 
-        document.addEventListener('focusout', (e) => {
-            if (!(e.target instanceof Element) || !e.target.matches('[data-monto]')) return;
-            normalizarCampoMonto(e.target, true);
-            if (e.target.closest('#desglose-panel')) {
+        function alEditarDesgloseOColegiatura(el) {
+            if (!(el instanceof Element)) return;
+            if (el.closest('#colegiaturas-lista')) {
+                pintarColegiaturas();
+                programarRecalculo();
+                return;
+            }
+            if (el.closest('#desglose-panel')) {
                 sincronizarTotalGastos();
                 pintarAvisosDesglose();
                 programarRecalculo();
-            } else if (e.target.closest('#colegiaturas-lista')) {
-                pintarColegiaturas();
-                programarRecalculo();
             }
+        }
+
+        document.addEventListener('focusout', (e) => {
+            if (!(e.target instanceof Element) || !e.target.matches('[data-monto]')) return;
+            normalizarCampoMonto(e.target, true);
+            alEditarDesgloseOColegiatura(e.target);
         });
 
         // Enter en los campos de monto
@@ -1717,6 +1782,7 @@
             // Actualización suave si la comparación ya está visible
             let t;
             $(id).addEventListener('input', () => {
+                if (id !== 'cuenta-especial') pintarAvisosTopeGlobal();
                 if ($('comparison-section').classList.contains('hidden')) return;
                 clearTimeout(t);
                 t = setTimeout(calcularConDeducciones, 300);
@@ -1751,14 +1817,7 @@
 
         const estimulosCard = document.querySelector('.estimulos-card');
         estimulosCard.addEventListener('input', (e) => {
-            if (e.target.closest('#desglose-panel')) {
-                sincronizarTotalGastos();
-                pintarAvisosDesglose();
-                programarRecalculo();
-            } else if (e.target.closest('#colegiaturas-lista')) {
-                pintarColegiaturas();
-                programarRecalculo();
-            }
+            alEditarDesgloseOColegiatura(e.target);
         });
         estimulosCard.addEventListener('change', (e) => {
             if (!e.target.closest('#colegiaturas-lista')) return;
@@ -1777,11 +1836,10 @@
             if (!e.target.matches('#desglose-panel [data-monto], #colegiaturas-lista [data-monto]')) return;
             e.preventDefault();
             normalizarCampoMonto(e.target, true);
-            if (e.target.closest('#desglose-panel')) {
+            if (e.target.closest('#colegiaturas-lista')) pintarColegiaturas();
+            else {
                 sincronizarTotalGastos();
                 pintarAvisosDesglose();
-            } else {
-                pintarColegiaturas();
             }
             calcularConDeducciones();
         });
